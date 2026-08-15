@@ -1,0 +1,30 @@
+# Entropia Riko — Python dependencies
+#
+# Stage 1 core/runtime/nodes are pure Python; no runtime third-party deps.
+# Tests use the standard library unittest.
+#
+# Torch will be introduced for the backend (Stage 3):
+#   torch>=2.0  (CPU first; cuda/mps detected after availability)
+#
+# Frontend dependencies live in package.json (React + Vite + TypeScript).
+#
+# Run Python tests:
+#   python -m unittest discover -s tests -t .
+#
+# Stage 2 API server (FastAPI):
+fastapi>=0.110
+uvicorn>=0.30
+torch>=2.0
+torchvision>=0.15
+numpy>=1.24
+
+# Optional backend: TensorFlow / Keras nodes (uncomment to enable).
+# The editor runs fine without it; TF nodes then raise a clear error on execute.
+# tensorflow>=2.10
+
+# Optional: Hugging Face pretrained models (diffusers / transformers nodes).
+# Uncomment to enable; requires network to download models on first use.
+# diffusers>=0.25
+# transformers>=4.36
+# accelerate>=0.25
+# safetensors>=0.4

@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "example",
+    "description": "Starter project graph: graph_input → graph_output (identity).",
+    "inputs": [{"name": "input", "data_kind": "tensor"}],
+    "outputs": [{"name": "output", "data_kind": "tensor"}]
+  },
+  "nodes": [
+    {"id":"gin","type_name":"graph_input","label":"Input","category":"Subgraph","position":[100,150],"parameters":{"name":"input","data_kind":"tensor"},"inputs":[],"outputs":[]},
+    {"id":"gout","type_name":"graph_output","label":"Output","category":"Subgraph","position":[400,150],"parameters":{"name":"output","data_kind":"tensor"},"inputs":[],"outputs":[]}
+  ],
+  "edges": [
+    {"id":"e0","source_node":"gin","source_port":"value","target_node":"gout","target_port":"value"}
+  ],
+  "settings": {}
+}

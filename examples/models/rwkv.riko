@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "rwkv",
+    "description": "RWKV channel-mix block: linear(64->128) -> sigmoid -> linear(128->64). Input: (B,L,64).",
+    "inputs": [{"name": "input", "data_kind": "tensor"}],
+    "outputs": [{"name": "output", "data_kind": "tensor"}]
+  },
+  "nodes": [
+    {"id":"gin","type_name":"graph_input","label":"Input","category":"Subgraph","position":[50,250],"parameters":{"name":"input"},"inputs":[],"outputs":[]},
+    {"id":"p1","type_name":"linear","label":"Key Proj 64->128","category":"Neural","position":[250,250],"parameters":{"in_features":64,"out_features":128},"inputs":[],"outputs":[]},
+    {"id":"act","type_name":"sigmoid","label":"Sigmoid","category":"Neural","position":[450,250],"parameters":{"device":"cpu"},"inputs":[],"outputs":[]},
+    {"id":"p2","type_name":"linear","label":"Value Proj 128->64","category":"Neural","position":[650,250],"parameters":{"in_features":128,"out_features":64},"inputs":[],"outputs":[]},
+    {"id":"gout","type_name":"graph_output","label":"Output","category":"Subgraph","position":[850,250],"parameters":{"name":"output"},"inputs":[],"outputs":[]}
+  ],
+  "edges": [
+    {"id":"e0","source_node":"gin","source_port":"value","target_node":"p1","target_port":"x"},
+    {"id":"e1","source_node":"p1","source_port":"output","target_node":"act","target_port":"x"},
+    {"id":"e2","source_node":"act","source_port":"result","target_node":"p2","target_port":"x"},
+    {"id":"e3","source_node":"p2","source_port":"output","target_node":"gout","target_port":"value"}
+  ],
+  "settings": {}
+}

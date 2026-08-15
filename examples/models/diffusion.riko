@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "diffusion",
+    "description": "Diffusion denoising step: conv2d(1->16) -> silu -> conv2d(16->1). Input: noisy image (B,1,H,W).",
+    "inputs": [{"name": "input", "data_kind": "tensor"}],
+    "outputs": [{"name": "output", "data_kind": "tensor"}]
+  },
+  "nodes": [
+    {"id":"gin","type_name":"graph_input","label":"Noisy Input","category":"Subgraph","position":[50,250],"parameters":{"name":"input"},"inputs":[],"outputs":[]},
+    {"id":"c1","type_name":"conv2d","label":"Conv2D 1->16","category":"Neural","position":[250,250],"parameters":{"in_channels":1,"out_channels":16,"kernel_size":3,"stride":1,"padding":1},"inputs":[],"outputs":[]},
+    {"id":"act","type_name":"silu","label":"SiLU","category":"Neural","position":[450,250],"parameters":{"device":"cpu"},"inputs":[],"outputs":[]},
+    {"id":"c2","type_name":"conv2d","label":"Conv2D 16->1","category":"Neural","position":[650,250],"parameters":{"in_channels":16,"out_channels":1,"kernel_size":3,"stride":1,"padding":1},"inputs":[],"outputs":[]},
+    {"id":"gout","type_name":"graph_output","label":"Denoised","category":"Subgraph","position":[850,250],"parameters":{"name":"output"},"inputs":[],"outputs":[]}
+  ],
+  "edges": [
+    {"id":"e0","source_node":"gin","source_port":"value","target_node":"c1","target_port":"x"},
+    {"id":"e1","source_node":"c1","source_port":"result","target_node":"act","target_port":"x"},
+    {"id":"e2","source_node":"act","source_port":"result","target_node":"c2","target_port":"x"},
+    {"id":"e3","source_node":"c2","source_port":"result","target_node":"gout","target_port":"value"}
+  ],
+  "settings": {}
+}

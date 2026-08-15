@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Node / frontend build
+node_modules/
+dist/
+
+# Entropia Riko tool caches & user data
+.riko/
+data/
+outputs/
+
+# OS
+.DS_Store
+Thumbs.db

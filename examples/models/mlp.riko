@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "mlp",
+    "description": "Reusable MLP block: input(8) -> linear(8->16) -> relu -> linear(16->4) -> output(4). Importable via the `import` node.",
+    "inputs": [{"name": "input", "data_kind": "tensor"}],
+    "outputs": [{"name": "output", "data_kind": "tensor"}]
+  },
+  "nodes": [
+    {"id": "gin", "type_name": "graph_input", "label": "Graph Input", "category": "Subgraph", "position": [40, 200], "parameters": {"name": "input"}, "inputs": [], "outputs": []},
+    {"id": "fc1", "type_name": "linear", "label": "Linear 8→16", "category": "Neural", "position": [240, 200], "parameters": {"in_features": 8, "out_features": 16}, "inputs": [], "outputs": []},
+    {"id": "act", "type_name": "relu", "label": "ReLU", "category": "Neural", "position": [440, 200], "parameters": {}, "inputs": [], "outputs": []},
+    {"id": "fc2", "type_name": "linear", "label": "Linear 16→4", "category": "Neural", "position": [640, 200], "parameters": {"in_features": 16, "out_features": 4}, "inputs": [], "outputs": []},
+    {"id": "gout", "type_name": "graph_output", "label": "Graph Output", "category": "Subgraph", "position": [840, 200], "parameters": {"name": "output"}, "inputs": [], "outputs": []}
+  ],
+  "edges": [
+    {"id": "e0", "source_node": "gin", "source_port": "value", "target_node": "fc1", "target_port": "x"},
+    {"id": "e1", "source_node": "fc1", "source_port": "output", "target_node": "act", "target_port": "x"},
+    {"id": "e2", "source_node": "act", "source_port": "output", "target_node": "fc2", "target_port": "x"},
+    {"id": "e3", "source_node": "fc2", "source_port": "output", "target_node": "gout", "target_port": "value"}
+  ],
+  "settings": {}
+}

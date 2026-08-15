@@ -1,0 +1,8 @@
+{
+  "name": "example_plugin",
+  "version": "1.0.0",
+  "description": "Example plugin: registers a `plugin_double` node (x → 2x).",
+  "author": "Entropia Riko",
+  "entry": "nodes.py",
+  "requires": []
+}

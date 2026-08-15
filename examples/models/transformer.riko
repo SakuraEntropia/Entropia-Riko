@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "transformer",
+    "description": "Transformer: tokens -> embedding(100,64) -> encoder(d=64,h=8,L=2) -> linear(64->10). Input: token IDs (B,S).",
+    "inputs": [{"name": "input", "data_kind": "tensor"}],
+    "outputs": [{"name": "output", "data_kind": "tensor"}]
+  },
+  "nodes": [
+    {"id":"gin","type_name":"graph_input","label":"Input","category":"Subgraph","position":[50,250],"parameters":{"name":"input"},"inputs":[],"outputs":[]},
+    {"id":"emb","type_name":"embedding","label":"Embedding","category":"Neural","position":[250,250],"parameters":{"num_embeddings":100,"embedding_dim":64},"inputs":[],"outputs":[]},
+    {"id":"enc","type_name":"transformer_encoder","label":"Transformer Encoder","category":"Neural","position":[450,250],"parameters":{"d_model":64,"nhead":8,"num_layers":2},"inputs":[],"outputs":[]},
+    {"id":"out","type_name":"linear","label":"Linear","category":"Neural","position":[650,250],"parameters":{"in_features":64,"out_features":10},"inputs":[],"outputs":[]},
+    {"id":"gout","type_name":"graph_output","label":"Output","category":"Subgraph","position":[850,250],"parameters":{"name":"output"},"inputs":[],"outputs":[]}
+  ],
+  "edges": [
+    {"id":"e0","source_node":"gin","source_port":"value","target_node":"emb","target_port":"indices"},
+    {"id":"e1","source_node":"emb","source_port":"result","target_node":"enc","target_port":"x"},
+    {"id":"e2","source_node":"enc","source_port":"output","target_node":"out","target_port":"x"},
+    {"id":"e3","source_node":"out","source_port":"output","target_node":"gout","target_port":"value"}
+  ],
+  "settings": {}
+}

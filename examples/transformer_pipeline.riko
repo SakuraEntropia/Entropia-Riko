@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "transformer_pipeline",
+    "description": "Tokens -> Embedding -> Transformer Encoder -> Linear -> logits. Can be referenced by other graphs via graph_reference node.",
+    "inputs": [{"name": "input", "data_kind": "tensor"}],
+    "outputs": [{"name": "output", "data_kind": "tensor"}]
+  },
+  "nodes": [
+    {"id": "gin", "type_name": "graph_input", "label": "Graph Input", "category": "Subgraph", "position": [50, 200], "parameters": {"name": "input"}, "inputs": [], "outputs": []},
+    {"id": "emb", "type_name": "embedding", "label": "Embedding", "category": "Neural", "position": [250, 200], "parameters": {"num_embeddings": 10, "embedding_dim": 16}, "inputs": [], "outputs": []},
+    {"id": "enc", "type_name": "transformer_encoder", "label": "Transformer Encoder", "category": "Neural", "position": [450, 200], "parameters": {"d_model": 16, "nhead": 4, "num_layers": 2}, "inputs": [], "outputs": []},
+    {"id": "out", "type_name": "linear", "label": "Linear", "category": "Neural", "position": [650, 200], "parameters": {"in_features": 16, "out_features": 5}, "inputs": [], "outputs": []},
+    {"id": "gout", "type_name": "graph_output", "label": "Graph Output", "category": "Subgraph", "position": [850, 200], "parameters": {"name": "output"}, "inputs": [], "outputs": []}
+  ],
+  "edges": [
+    {"id": "e0", "source_node": "gin", "source_port": "value", "target_node": "emb", "target_port": "indices"},
+    {"id": "e1", "source_node": "emb", "source_port": "result", "target_node": "enc", "target_port": "x"},
+    {"id": "e2", "source_node": "enc", "source_port": "output", "target_node": "out", "target_port": "x"},
+    {"id": "e3", "source_node": "out", "source_port": "output", "target_node": "gout", "target_port": "value"}
+  ],
+  "settings": {}
+}

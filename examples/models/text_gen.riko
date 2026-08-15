@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "text_gen",
+    "description": "Text → text generation: transformers_pipeline (text-generation) → text_preview. Edit the 'text' parameter on the pipeline node to change the input.",
+    "inputs": [{"name": "text", "data_kind": "text"}],
+    "outputs": [{"name": "output", "data_kind": "text"}]
+  },
+  "nodes": [
+    {"id":"pipe","type_name":"transformers_pipeline","label":"Text Generator","category":"HuggingFace","position":[200,150],"parameters":{"task":"text-generation","model_id":"gpt2","text":"Once upon a time"},"inputs":[],"outputs":[]},
+    {"id":"preview","type_name":"text_preview","label":"Text Output","category":"Utility","position":[520,150],"parameters":{},"inputs":[],"outputs":[]}
+  ],
+  "edges": [
+    {"id":"e0","source_node":"pipe","source_port":"result","target_node":"preview","target_port":"x"}
+  ],
+  "settings": {}
+}

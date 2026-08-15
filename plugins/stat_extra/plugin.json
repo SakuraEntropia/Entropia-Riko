@@ -1,0 +1,8 @@
+{
+  "name": "stat_extra",
+  "version": "1.0.0",
+  "description": "Default plugin: affine + sign nodes (`plugin_shift_scale`, `plugin_neg`).",
+  "author": "Entropia Riko",
+  "entry": "nodes.py",
+  "requires": []
+}

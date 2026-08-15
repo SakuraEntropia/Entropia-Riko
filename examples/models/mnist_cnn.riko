@@ -1,0 +1,36 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "mnist_cnn",
+    "description": "MNIST training step: mnist_loader -> conv2d -> relu -> pool x2 -> flatten -> linear -> cross_entropy_loss. Input: none (data loaded internally). Output: loss.",
+    "inputs": [],
+    "outputs": [{"name": "output", "data_kind": "tensor"}]
+  },
+  "nodes": [
+    {"id":"data","type_name":"mnist_loader","label":"MNIST Loader","category":"Data","position":[50,150],"parameters":{"batch_size":32,"train":true,"device":"cpu"},"inputs":[],"outputs":[]},
+    {"id":"c1","type_name":"conv2d","label":"Conv2D 1->16","category":"Neural","position":[250,100],"parameters":{"in_channels":1,"out_channels":16,"kernel_size":3,"stride":1,"padding":1},"inputs":[],"outputs":[]},
+    {"id":"r1","type_name":"relu","label":"ReLU","category":"Neural","position":[400,100],"parameters":{"device":"cpu"},"inputs":[],"outputs":[]},
+    {"id":"p1","type_name":"maxpool2d","label":"MaxPool 2","category":"Neural","position":[550,100],"parameters":{"kernel_size":2},"inputs":[],"outputs":[]},
+    {"id":"c2","type_name":"conv2d","label":"Conv2D 16->32","category":"Neural","position":[700,100],"parameters":{"in_channels":16,"out_channels":32,"kernel_size":3,"stride":1,"padding":1},"inputs":[],"outputs":[]},
+    {"id":"r2","type_name":"relu","label":"ReLU","category":"Neural","position":[850,100],"parameters":{"device":"cpu"},"inputs":[],"outputs":[]},
+    {"id":"p2","type_name":"maxpool2d","label":"MaxPool 2","category":"Neural","position":[1000,100],"parameters":{"kernel_size":2},"inputs":[],"outputs":[]},
+    {"id":"f","type_name":"flatten","label":"Flatten","category":"Shape","position":[1150,100],"parameters":{"start_dim":1,"end_dim":-1,"device":"cpu"},"inputs":[],"outputs":[]},
+    {"id":"l","type_name":"linear","label":"Linear 1568->10","category":"Neural","position":[1300,100],"parameters":{"in_features":1568,"out_features":10},"inputs":[],"outputs":[]},
+    {"id":"loss","type_name":"cross_entropy_loss","label":"CrossEntropy Loss","category":"Loss","position":[1300,300],"parameters":{},"inputs":[],"outputs":[]},
+    {"id":"gout","type_name":"graph_output","label":"Loss Output","category":"Subgraph","position":[1500,300],"parameters":{"name":"output"},"inputs":[],"outputs":[]}
+  ],
+  "edges": [
+    {"id":"e0","source_node":"data","source_port":"images","target_node":"c1","target_port":"x"},
+    {"id":"e1","source_node":"c1","source_port":"result","target_node":"r1","target_port":"x"},
+    {"id":"e2","source_node":"r1","source_port":"output","target_node":"p1","target_port":"x"},
+    {"id":"e3","source_node":"p1","source_port":"result","target_node":"c2","target_port":"x"},
+    {"id":"e4","source_node":"c2","source_port":"result","target_node":"r2","target_port":"x"},
+    {"id":"e5","source_node":"r2","source_port":"output","target_node":"p2","target_port":"x"},
+    {"id":"e6","source_node":"p2","source_port":"result","target_node":"f","target_port":"x"},
+    {"id":"e7","source_node":"f","source_port":"result","target_node":"l","target_port":"x"},
+    {"id":"e8","source_node":"l","source_port":"output","target_node":"loss","target_port":"pred"},
+    {"id":"e9","source_node":"data","source_port":"labels","target_node":"loss","target_port":"target"},
+    {"id":"e10","source_node":"loss","source_port":"loss","target_node":"gout","target_port":"value"}
+  ],
+  "settings": {}
+}

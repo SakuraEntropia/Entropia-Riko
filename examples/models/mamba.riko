@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "mamba",
+    "description": "Mamba SSM block: linear proj -> transpose -> conv1d -> SiLU -> transpose -> linear proj. Input: (B,L,64).",
+    "inputs": [{"name": "input", "data_kind": "tensor"}],
+    "outputs": [{"name": "output", "data_kind": "tensor"}]
+  },
+  "nodes": [
+    {"id":"gin","type_name":"graph_input","label":"Input","category":"Subgraph","position":[50,300],"parameters":{"name":"input"},"inputs":[],"outputs":[]},
+    {"id":"p1","type_name":"linear","label":"In Proj 64->128","category":"Neural","position":[200,300],"parameters":{"in_features":64,"out_features":128},"inputs":[],"outputs":[]},
+    {"id":"t1","type_name":"transpose","label":"Transpose BLC->BCL","category":"Shape","position":[400,300],"parameters":{"dim0":1,"dim1":2,"device":"cpu"},"inputs":[],"outputs":[]},
+    {"id":"conv","type_name":"conv1d","label":"Conv1D 128","category":"Neural","position":[600,300],"parameters":{"in_channels":128,"out_channels":128,"kernel_size":3,"stride":1,"padding":1},"inputs":[],"outputs":[]},
+    {"id":"act","type_name":"silu","label":"SiLU","category":"Neural","position":[800,300],"parameters":{"device":"cpu"},"inputs":[],"outputs":[]},
+    {"id":"t2","type_name":"transpose","label":"Transpose BCL->BLC","category":"Shape","position":[1000,300],"parameters":{"dim0":1,"dim1":2,"device":"cpu"},"inputs":[],"outputs":[]},
+    {"id":"p2","type_name":"linear","label":"Out Proj 128->64","category":"Neural","position":[1200,300],"parameters":{"in_features":128,"out_features":64},"inputs":[],"outputs":[]},
+    {"id":"gout","type_name":"graph_output","label":"Output","category":"Subgraph","position":[1400,300],"parameters":{"name":"output"},"inputs":[],"outputs":[]}
+  ],
+  "edges": [
+    {"id":"e0","source_node":"gin","source_port":"value","target_node":"p1","target_port":"x"},
+    {"id":"e1","source_node":"p1","source_port":"output","target_node":"t1","target_port":"x"},
+    {"id":"e2","source_node":"t1","source_port":"result","target_node":"conv","target_port":"x"},
+    {"id":"e3","source_node":"conv","source_port":"result","target_node":"act","target_port":"x"},
+    {"id":"e4","source_node":"act","source_port":"result","target_node":"t2","target_port":"x"},
+    {"id":"e5","source_node":"t2","source_port":"result","target_node":"p2","target_port":"x"},
+    {"id":"e6","source_node":"p2","source_port":"output","target_node":"gout","target_port":"value"}
+  ],
+  "settings": {}
+}
