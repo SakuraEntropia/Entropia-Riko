@@ -86,6 +86,20 @@ npm run desktop                                       # Electron 桌面壳
 .venv/bin/python scripts/make_brand_assets.py         # 品牌素材助手（见脚本说明）
 ```
 
+## 分发 / Release
+
+打包一个干净的、可分享的源码 ZIP（先提交未提交改动，然后只归档已跟踪文件——
+不含 `node_modules`、`.venv`、`dist`、缓存、备份）：
+
+```bash
+.venv/bin/python scripts/release.py "发布说明"
+```
+
+输出：`entropia-riko-release.zip`（在**父目录**，不修改工作文件夹）。内含 `src/`、
+`public/`、`plugins/`、`examples/`、`templates/`、`electron/`、`scripts/`、
+`tests/`、`docs/`、README 与配置文件——接收者只需 `pip install -r
+requirements.txt` + `npm install` 即可运行。
+
 ## 项目结构
 
 ```

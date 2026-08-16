@@ -107,6 +107,21 @@ npm run desktop                                       # Electron desktop shell
 .venv/bin/python scripts/make_brand_assets.py         # brand asset helper (see script)
 ```
 
+## Distribution / Release
+
+Package a clean, shareable source ZIP (commits pending changes, then archives
+only tracked files — no `node_modules`, `.venv`, `dist`, caches, or backups):
+
+```bash
+.venv/bin/python scripts/release.py "release note"
+```
+
+Output: `entropia-riko-release.zip` in the **parent directory** (the working
+folder is never modified). It contains `src/`, `public/`, `plugins/`,
+`examples/`, `templates/`, `electron/`, `scripts/`, `tests/`, `docs/`, the
+READMEs, and config files — everything a recipient needs to `pip install -r
+requirements.txt` + `npm install` and run.
+
 ## Project structure
 
 ```
