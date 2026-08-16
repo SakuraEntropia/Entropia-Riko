@@ -17,3 +17,6 @@ outputs/
 # OS
 .DS_Store
 Thumbs.db
+
+# Legacy backup folder
+.doc_backups/
