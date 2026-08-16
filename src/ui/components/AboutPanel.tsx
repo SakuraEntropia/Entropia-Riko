@@ -1,12 +1,13 @@
 /** About dialog (floating window, opened from the app logo menu). */
 import { APP_VERSION } from "../version";
 import { FloatingWindow } from "./FloatingWindow";
+import { BrandLogo } from "./BrandLogo";
 
 export function AboutPanel({ onClose }: { onClose: () => void }) {
   return (
     <FloatingWindow title="About Entropia Riko" onClose={onClose} width={440}>
       <div className="about-hero">
-        <img className="about-logo" src="/brand/logo.svg" alt="Entropia Riko logo" />
+        <BrandLogo className="about-logo" />
         <h2>Entropia Riko</h2>
         <div className="about-version">Version {APP_VERSION}</div>
       </div>

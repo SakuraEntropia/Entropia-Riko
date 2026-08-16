@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useGraphStore, type FileInfo } from "../store/graphStore";
 import { APP_VERSION } from "../version";
+import { BrandLogo } from "./BrandLogo";
 
 export function WelcomePanel({ onClose }: { onClose: () => void }) {
   const recentFiles = useGraphStore((s) => s.recentFiles);
@@ -61,11 +62,9 @@ export function WelcomePanel({ onClose }: { onClose: () => void }) {
       <div className="welcome">
         {/* Header-image slot: replace public/brand/hero.jpg (JPEG bitmap, 960×220) in place. */}
         <div className="welcome-hero">
-          <img
+          <BrandLogo
             className="welcome-logo"
-            src="/brand/logo.svg"
-            alt="Entropia Riko logo"
-            title="Logo slot — replace public/brand/logo.svg"
+            title="Logo slot — replace public/brand/logo.png (bitmap) or logo.svg (vector)"
           />
           <span className="welcome-version">v{APP_VERSION}</span>
         </div>

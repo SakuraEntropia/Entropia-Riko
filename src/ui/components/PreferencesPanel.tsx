@@ -5,6 +5,7 @@ import { useThemeStore, type ThemeMode } from "../theme";
 import { APP_VERSION } from "../version";
 import { PluginPanel } from "./PluginPanel";
 import { FloatingWindow } from "./FloatingWindow";
+import { BrandLogo } from "./BrandLogo";
 
 type CategoryId = "appearance" | "plugins" | "about";
 
@@ -117,11 +118,7 @@ export function PreferencesPanel({ onClose }: { onClose: () => void }) {
             {category === "about" && (
               <section className="prefs-section">
                 <div className="prefs-about">
-                  <img
-                    className="prefs-about-logo"
-                    src="/brand/logo.svg"
-                    alt="Entropia Riko logo"
-                  />
+                  <BrandLogo className="prefs-about-logo" />
                   <h3>Entropia Riko</h3>
                   <div className="prefs-about-version">Version {APP_VERSION}</div>
                   <p className="prefs-desc">

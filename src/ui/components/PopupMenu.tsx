@@ -36,8 +36,8 @@ export function PopupMenu({
   maxWidth?: number;
 }) {
   const [query, setQuery] = useState("");
-  // Tracks which categories the user has manually collapsed (by category name).
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+  // Tracks which categories the user has manually expanded (default = collapsed).
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   const grouped = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -89,14 +89,15 @@ export function PopupMenu({
         )}
         <div className="popup-list">
           {order.map((cat) => {
-            // Ignore manual collapse state while searching so matches stay visible.
-            const isCollapsed = !query && !!collapsed[cat];
+            // Categories are collapsed by default; expand on click. Ignore collapse
+            // state while searching so matches stay visible.
+            const isCollapsed = !query && !expanded[cat];
             return (
               <div key={cat} className="popup-category">
                 {cat !== "" && (
                   <div
                     className="popup-cat-header"
-                    onClick={() => setCollapsed((c) => ({ ...c, [cat]: !c[cat] }))}
+                    onClick={() => setExpanded((c) => ({ ...c, [cat]: !c[cat] }))}
                   >
                     <span className="popup-cat-toggle">{isCollapsed ? "▸" : "▾"}</span>
                     <span className="popup-cat-label">{cat}</span>

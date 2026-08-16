@@ -4,6 +4,7 @@ import { useGraphStore } from "../store/graphStore";
 import { useThemeStore } from "../theme";
 import { WorkspaceTabs } from "./WorkspaceTabs";
 import { openFilePicker } from "./FilePicker";
+import { BrandLogo } from "./BrandLogo";
 import type { WorkspaceInstance } from "../areas";
 
 interface MenuItem {
@@ -204,7 +205,7 @@ export function MenuBar({
         onClick={() => setOpenMenu(openMenu === "__app__" ? null : "__app__")}
         title="Entropia Riko"
       >
-        <img className="menubar-logo" src="/brand/logo.svg" alt="Entropia Riko" />
+        <BrandLogo className="menubar-logo" alt="Entropia Riko" />
         {openMenu === "__app__" && (
           <div className="dropdown app-menu" onClick={(e) => e.stopPropagation()}>
             <div
