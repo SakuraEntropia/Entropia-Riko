@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "project": {
+    "name": "audio_ai",
+    "version": "0.1.0",
+    "engine_version": "0.2.0",
+    "template": "audio",
+    "created": "2026-01-01T00:00:00+00:00"
+  },
+  "runtime": {
+    "gpu": false,
+    "cuda": null,
+    "python": "3.12"
+  },
+  "dependencies": {
+    "python": [],
+    "models": [],
+    "plugins": []
+  },
+  "workflows": {
+    "default": "00_audio_prepare.riko",
+    "all": [
+      "00_audio_prepare.riko",
+      "01_training.riko",
+      "02_generation.riko"
+    ]
+  }
+}

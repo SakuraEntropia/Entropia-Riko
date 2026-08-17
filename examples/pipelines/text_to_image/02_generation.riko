@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "generation",
+    "workflow": {
+      "name": "generation",
+      "category": "inference",
+      "version": "1",
+      "dependencies": [
+        "training"
+      ],
+      "input_types": [
+        "text"
+      ],
+      "output_types": [
+        "image"
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "pipe",
+      "type_name": "diffusers_text2img",
+      "label": "Text→Image",
+      "category": "HF",
+      "position": [
+        60,
+        150
+      ],
+      "parameters": {
+        "prompt": "a red cube",
+        "height": 512,
+        "width": 512,
+        "num_steps": 4
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "gout",
+      "type_name": "graph_output",
+      "label": "Image",
+      "category": "Subgraph",
+      "position": [
+        320,
+        150
+      ],
+      "parameters": {
+        "name": "image"
+      },
+      "inputs": [],
+      "outputs": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source_node": "pipe",
+      "source_port": "result",
+      "target_node": "gout",
+      "target_port": "value"
+    }
+  ],
+  "settings": {}
+}

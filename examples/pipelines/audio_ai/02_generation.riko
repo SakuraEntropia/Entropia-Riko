@@ -1,0 +1,62 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "generation",
+    "workflow": {
+      "name": "generation",
+      "category": "inference",
+      "version": "1",
+      "dependencies": [
+        "training"
+      ],
+      "input_types": [
+        "audio"
+      ],
+      "output_types": [
+        "audio"
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "gin",
+      "type_name": "graph_input",
+      "label": "Audio",
+      "category": "Subgraph",
+      "position": [
+        40,
+        150
+      ],
+      "parameters": {
+        "name": "audio"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "gout",
+      "type_name": "graph_output",
+      "label": "Output",
+      "category": "Subgraph",
+      "position": [
+        300,
+        150
+      ],
+      "parameters": {
+        "name": "output"
+      },
+      "inputs": [],
+      "outputs": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source_node": "gin",
+      "source_port": "value",
+      "target_node": "gout",
+      "target_port": "value"
+    }
+  ],
+  "settings": {}
+}

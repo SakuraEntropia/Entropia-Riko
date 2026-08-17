@@ -1,0 +1,62 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "export",
+    "workflow": {
+      "name": "export",
+      "category": "export",
+      "version": "1",
+      "dependencies": [
+        "processing"
+      ],
+      "input_types": [
+        "video"
+      ],
+      "output_types": [
+        "file"
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "gin",
+      "type_name": "graph_input",
+      "label": "Video",
+      "category": "Subgraph",
+      "position": [
+        40,
+        150
+      ],
+      "parameters": {
+        "name": "video"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "gout",
+      "type_name": "graph_output",
+      "label": "Output",
+      "category": "Subgraph",
+      "position": [
+        300,
+        150
+      ],
+      "parameters": {
+        "name": "output"
+      },
+      "inputs": [],
+      "outputs": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source_node": "gin",
+      "source_port": "value",
+      "target_node": "gout",
+      "target_port": "value"
+    }
+  ],
+  "settings": {}
+}

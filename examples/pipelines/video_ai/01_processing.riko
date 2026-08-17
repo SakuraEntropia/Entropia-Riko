@@ -1,0 +1,62 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "processing",
+    "workflow": {
+      "name": "processing",
+      "category": "inference",
+      "version": "1",
+      "dependencies": [
+        "frame_extract"
+      ],
+      "input_types": [
+        "video"
+      ],
+      "output_types": [
+        "video"
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "gin",
+      "type_name": "graph_input",
+      "label": "Frames",
+      "category": "Subgraph",
+      "position": [
+        40,
+        150
+      ],
+      "parameters": {
+        "name": "frames"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "gout",
+      "type_name": "graph_output",
+      "label": "Output",
+      "category": "Subgraph",
+      "position": [
+        300,
+        150
+      ],
+      "parameters": {
+        "name": "output"
+      },
+      "inputs": [],
+      "outputs": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source_node": "gin",
+      "source_port": "value",
+      "target_node": "gout",
+      "target_port": "value"
+    }
+  ],
+  "settings": {}
+}
