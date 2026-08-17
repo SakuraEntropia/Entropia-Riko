@@ -1,5 +1,12 @@
-"""Project system: manifest, templates, and workspace operations."""
+"""Project system: manifest, templates, workspace, cache, workflow, experiments."""
 
+from .cache import (
+    bake_artifact,
+    get_bake_artifact,
+    get_bake_metadata,
+    is_cache_valid,
+    list_bakes,
+)
 from .experiment import (
     hardware_info,
     list_experiments,
@@ -18,6 +25,13 @@ from .templates import (
     generate_project,
     get_template,
 )
+from .workflow import (
+    WORKFLOW_CATEGORIES,
+    WorkflowMetadata,
+    attach_metadata,
+    dependency_order,
+    extract_metadata,
+)
 from .workspace import (
     create_project,
     migrate_project,
@@ -29,7 +43,9 @@ from .workspace import (
 __all__ = [
     "ProjectManifest",
     "ProjectTemplate",
+    "WorkflowMetadata",
     "PROJECT_TEMPLATES",
+    "WORKFLOW_CATEGORIES",
     "MANIFEST_FILENAME",
     "REQUIREMENTS_FILENAME",
     "is_project",
@@ -44,4 +60,12 @@ __all__ = [
     "record_experiment",
     "list_experiments",
     "hardware_info",
+    "bake_artifact",
+    "get_bake_artifact",
+    "get_bake_metadata",
+    "is_cache_valid",
+    "list_bakes",
+    "extract_metadata",
+    "attach_metadata",
+    "dependency_order",
 ]
