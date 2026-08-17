@@ -3,7 +3,7 @@
 Scans ``plugins/*/plugin.json`` for manifests and imports their Python entry
 modules (which typically register nodes via ``@register``). Plugins are
 user-authored and loaded from the filesystem — they do not need to live under
-``src/``.
+``entropia_riko/``.
 
 Enable/disable state is persisted in ``plugins/state.json``::
 

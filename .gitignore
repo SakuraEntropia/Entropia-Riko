@@ -5,6 +5,11 @@ __pycache__/
 .venv/
 venv/
 
+# Python packaging (sdist / wheel / setuptools)
+dist-pypi/
+build/
+*.egg-info/
+
 # Node / frontend build
 node_modules/
 dist/

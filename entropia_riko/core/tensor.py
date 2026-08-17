@@ -1,7 +1,7 @@
 """Tensor IR (DATA_FORMAT.md).
 
 Portable tensor data carrying shape / dtype / device / payload / metadata.
-Pure Python; does not import torch. The Torch backend (src/backend) is
+Pure Python; does not import torch. The Torch backend (entropia_riko/backend) is
 responsible for converting between TensorValue and torch.Tensor.
 """
 from __future__ import annotations

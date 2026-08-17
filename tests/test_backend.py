@@ -13,11 +13,11 @@ except ImportError:
     TORCH_AVAILABLE = False
     torch = None
 
-import src.nodes  # noqa: F401  触发节点注册（含 torch_ops）
-from src.core.tensor import TensorValue
-from src.backend.device import resolve_device
-from src.backend.converter import to_torch, from_torch
-from src.runtime.registry import default_registry
+import entropia_riko.nodes  # noqa: F401  触发节点注册（含 torch_ops）
+from entropia_riko.core.tensor import TensorValue
+from entropia_riko.backend.device import resolve_device
+from entropia_riko.backend.converter import to_torch, from_torch
+from entropia_riko.runtime.registry import default_registry
 
 
 @unittest.skipUnless(TORCH_AVAILABLE, "torch 未安装，跳过 backend 测试")
@@ -98,8 +98,8 @@ class TestTorchOps(unittest.TestCase):
         self.assertEqual(out["result"].item(), 20.0)
 
     def test_torch_add_via_executor(self):
-        from src.core.document import GraphDocument, NodeModel, EdgeModel
-        from src.runtime.executor import execute
+        from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel
+        from entropia_riko.runtime.executor import execute
 
         doc = GraphDocument()
         doc.add_node(NodeModel(id="a", type_name="constant", parameters={"value": 2.0}))
@@ -141,8 +141,8 @@ class TestNeuralNodes(unittest.TestCase):
         self.assertEqual(out["output"].to_list(), [0.0, 2.0, 0.0])
 
     def test_linear_relu_graph(self):
-        from src.core.document import GraphDocument, NodeModel, EdgeModel
-        from src.runtime.executor import execute
+        from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel
+        from entropia_riko.runtime.executor import execute
 
         doc = GraphDocument()
         doc.add_node(NodeModel(id="in", type_name="constant", parameters={"value": [1.0, -2.0, 3.0]}))

@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "entropia-riko"
+version = "0.1.0"
+description = "Professional node-graph deep-learning editor — ComfyUI-style visual workflows for PyTorch, with code export, training curves, plugins, and subgraphs."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT License" }
+authors = [{ name = "Entropia Riko contributors" }]
+keywords = ["pytorch", "deep-learning", "node-graph", "workflow", "comfyui", "fastapi", "codegen"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn>=0.30",
+    "torch>=2.0",
+    "torchvision>=0.15",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+tf = ["tensorflow>=2.10"]
+hf = ["diffusers>=0.25", "transformers>=4.36", "accelerate>=0.25", "safetensors>=0.4"]
+
+[project.urls]
+Homepage = "https://github.com/SakuraEntropia/Entropia-Riko"
+Repository = "https://github.com/SakuraEntropia/Entropia-Riko"
+Documentation = "https://github.com/SakuraEntropia/Entropia-Riko#readme"
+
+[project.scripts]
+entropia-riko = "entropia_riko.server.app:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["entropia_riko*"]
+exclude = ["entropia_riko.ui*", "tests*"]

@@ -4,17 +4,17 @@
 """
 import unittest
 
-import src.nodes  # noqa: F401  触发 constant/add/multiply 注册
-from src.core.tensor import (
+import entropia_riko.nodes  # noqa: F401  触发 constant/add/multiply 注册
+from entropia_riko.core.tensor import (
     TensorValue,
     infer_shape,
     broadcast_shapes,
     broadcast_op,
 )
-from src.core.document import GraphDocument, NodeModel, EdgeModel, PortModel
-from src.nodes.math.constant import ConstantNode
-from src.nodes.math.add import AddNode
-from src.nodes.math.multiply import MultiplyNode
+from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel, PortModel
+from entropia_riko.nodes.math.constant import ConstantNode
+from entropia_riko.nodes.math.add import AddNode
+from entropia_riko.nodes.math.multiply import MultiplyNode
 
 
 class TestTensor(unittest.TestCase):

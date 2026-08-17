@@ -1,10 +1,10 @@
 """Plugin system tests: loading + node registration from plugins/. """
 import unittest
 
-import src.nodes  # noqa: F401  触发内置节点注册
-from src.plugins.loader import load_plugins, loaded_plugins, PLUGINS_DIR
-from src.runtime.registry import default_registry
-from src.core.tensor import TensorValue
+import entropia_riko.nodes  # noqa: F401  触发内置节点注册
+from entropia_riko.plugins.loader import load_plugins, loaded_plugins, PLUGINS_DIR
+from entropia_riko.runtime.registry import default_registry
+from entropia_riko.core.tensor import TensorValue
 
 
 class TestPlugins(unittest.TestCase):

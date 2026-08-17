@@ -17,7 +17,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 
-import src.nodes  # noqa: F401  触发节点注册
+import entropia_riko.nodes  # noqa: F401  触发节点注册
 from ..plugins.loader import (
     load_plugins,
     loaded_plugins,
@@ -791,3 +791,10 @@ def fs_save(body: Dict[str, Any]) -> Dict[str, Any]:
         return {"status": "success", "path": str(p), "name": p.stem}
     except Exception as exc:
         return {"status": "error", "error": f"{type(exc).__name__}: {exc}"}
+
+
+def main() -> None:
+    """Entry point for the ``entropia-riko`` console script."""
+    import uvicorn
+
+    uvicorn.run(app, host="127.0.0.1", port=8000)

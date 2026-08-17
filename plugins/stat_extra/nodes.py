@@ -1,7 +1,7 @@
 """Default plugin: affine transform + negation nodes."""
-from src.runtime.registry import register
-from src.nodes.base import BaseNode, NodeInput, NodeOutput, Parameter
-from src.core.tensor import TensorValue, broadcast_op
+from entropia_riko.runtime.registry import register
+from entropia_riko.nodes.base import BaseNode, NodeInput, NodeOutput, Parameter
+from entropia_riko.core.tensor import TensorValue, broadcast_op
 
 
 @register("plugin_shift_scale")

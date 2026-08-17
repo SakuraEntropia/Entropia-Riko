@@ -1,4 +1,4 @@
-/** Frontend node definitions (mirrors src/nodes for the UI).
+/** Frontend node definitions (mirrors entropia_riko/nodes for the UI).
  * Stage 1 uses these for the node library and graph canvas. Execution is a
  * local mock in graphStore; the Python runtime is connected in a later stage. */
 

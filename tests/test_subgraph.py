@@ -11,12 +11,12 @@ try:
 except ImportError:
     TORCH_AVAILABLE = False
 
-import src.nodes  # noqa: F401  触发全部节点注册（含 import）
-from src.core.document import GraphDocument, NodeModel, EdgeModel
-from src.core.tensor import TensorValue
-from src.runtime.registry import default_registry
-from src.runtime.subgraph import resolve_graph_file, PROJECT_ROOT
-from src.runtime.codegen import export_python
+import entropia_riko.nodes  # noqa: F401  触发全部节点注册（含 import）
+from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel
+from entropia_riko.core.tensor import TensorValue
+from entropia_riko.runtime.registry import default_registry
+from entropia_riko.runtime.subgraph import resolve_graph_file, PROJECT_ROOT
+from entropia_riko.runtime.codegen import export_python
 
 
 class TestSubgraphResolution(unittest.TestCase):
@@ -51,7 +51,7 @@ class TestHfNodes(unittest.TestCase):
             self.assertIn(t, default_registry())
 
     def test_hf_codegen_compiles(self):
-        from src.runtime.codegen import export_python
+        from entropia_riko.runtime.codegen import export_python
         doc = GraphDocument.from_dict({
             "version": "1.0",
             "nodes": [
@@ -76,7 +76,7 @@ class TestWrangle(unittest.TestCase):
         self.assertEqual(out["result"].to_list(), [2.0, 4.0])
 
     def test_wrangle_codegen_compiles(self):
-        from src.runtime.codegen import export_python
+        from entropia_riko.runtime.codegen import export_python
         doc = GraphDocument()
         doc.add_node(NodeModel(id="in", type_name="constant", parameters={"value": [1.0, 2.0]}))
         doc.add_node(NodeModel(id="w", type_name="wrangle", parameters={"code": "result = x + 1"}))
@@ -95,7 +95,7 @@ class TestKerasExport(unittest.TestCase):
             self.assertIn(t, default_registry())
 
     def test_export_keras_compiles(self):
-        from src.runtime.codegen_tf import export_keras
+        from entropia_riko.runtime.codegen_tf import export_keras
         doc = GraphDocument.from_dict({
             "version": "0.1",
             "nodes": [
@@ -123,7 +123,7 @@ class TestKerasExport(unittest.TestCase):
 
     def test_export_torch_graph_to_keras_is_clean(self):
         """A torch-style graph (conv/relu/pool/linear) exports clean Keras, no None stubs."""
-        from src.runtime.codegen_tf import export_keras
+        from entropia_riko.runtime.codegen_tf import export_keras
         doc = self._load_cnn()
         code = export_keras(doc)
         compile(code, "<generated>", "exec")
@@ -144,7 +144,7 @@ class TestKerasExport(unittest.TestCase):
 @unittest.skipUnless(TORCH_AVAILABLE, "torch 未安装")
 class TestImportExecution(unittest.TestCase):
     def test_import_executes_mlp(self):
-        from src.runtime.executor import execute
+        from entropia_riko.runtime.executor import execute
         doc = GraphDocument()
         doc.add_node(NodeModel(id="in", type_name="constant", parameters={"value": [[1.0] * 8]}))
         doc.add_node(NodeModel(id="imp", type_name="import", parameters={"module": "mlp"}))
@@ -153,7 +153,7 @@ class TestImportExecution(unittest.TestCase):
         self.assertEqual(out["imp"]["output"].shape, (1, 4))
 
     def test_classifier_e2e(self):
-        from src.runtime.executor import execute
+        from entropia_riko.runtime.executor import execute
         doc = GraphDocument()
         doc.add_node(NodeModel(id="in", type_name="constant", parameters={"value": [[1.0] * 8]}))
         doc.add_node(NodeModel(id="imp", type_name="import", parameters={"module": "classifier"}))

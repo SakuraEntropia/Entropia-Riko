@@ -4,9 +4,9 @@ Imports the public node API via absolute ``src.*`` paths (the server runs from
 the project root, so ``src`` is importable) and registers a node through the
 ``@register`` decorator.
 """
-from src.runtime.registry import register
-from src.nodes.base import BaseNode, NodeInput, NodeOutput
-from src.core.tensor import TensorValue, broadcast_op, broadcast_shapes
+from entropia_riko.runtime.registry import register
+from entropia_riko.nodes.base import BaseNode, NodeInput, NodeOutput
+from entropia_riko.core.tensor import TensorValue, broadcast_op, broadcast_shapes
 
 
 @register("plugin_double")

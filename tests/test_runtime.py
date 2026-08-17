@@ -4,16 +4,16 @@
 """
 import unittest
 
-import src.nodes  # noqa: F401  触发节点注册
-from src.core.document import GraphDocument, NodeModel, EdgeModel
-from src.runtime.registry import Registry, default_registry
-from src.runtime.executor import (
+import entropia_riko.nodes  # noqa: F401  触发节点注册
+from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel
+from entropia_riko.runtime.registry import Registry, default_registry
+from entropia_riko.runtime.executor import (
     validate,
     execution_order,
     execute,
     RuntimeExecutionError,
 )
-from src.nodes.base import BaseNode
+from entropia_riko.nodes.base import BaseNode
 
 
 class TestRegistry(unittest.TestCase):

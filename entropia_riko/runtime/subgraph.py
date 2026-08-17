@@ -19,7 +19,7 @@ from ..core.document import GraphDocument
 from .executor import execute as exec_graph
 from .registry import Registry, default_registry
 
-# Project root (the directory that contains src/, examples/, workflows/).
+# Project root (the directory that contains entropia_riko/, examples/, workflows/).
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 # Directories searched (in order) when a bare module name is imported.

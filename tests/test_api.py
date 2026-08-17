@@ -16,11 +16,11 @@ except ImportError:
     torch = None
     nn = None
 
-import src.nodes  # noqa: F401  触发全部节点注册
-from src.core.tensor import TensorValue
-from src.runtime.registry import default_registry
-from src.core.document import GraphDocument, NodeModel, EdgeModel
-from src.runtime.executor import execute
+import entropia_riko.nodes  # noqa: F401  触发全部节点注册
+from entropia_riko.core.tensor import TensorValue
+from entropia_riko.runtime.registry import default_registry
+from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel
+from entropia_riko.runtime.executor import execute
 
 
 @unittest.skipUnless(TORCH_AVAILABLE, "torch 未安装")
@@ -158,7 +158,7 @@ class TestModelLoader(unittest.TestCase):
 @unittest.skipUnless(TORCH_AVAILABLE, "torch 未安装")
 class TestCodegen(unittest.TestCase):
     def test_export_add(self):
-        from src.runtime.codegen import export_python
+        from entropia_riko.runtime.codegen import export_python
         doc = GraphDocument()
         doc.add_node(NodeModel(id="a", type_name="constant", parameters={"value": 2.0}))
         doc.add_node(NodeModel(id="b", type_name="constant", parameters={"value": 3.0}))
@@ -171,7 +171,7 @@ class TestCodegen(unittest.TestCase):
         self.assertIn("import torch", code)
 
     def test_export_transformer(self):
-        from src.runtime.codegen import export_python
+        from entropia_riko.runtime.codegen import export_python
         doc = GraphDocument()
         doc.add_node(NodeModel(id="x", type_name="constant", parameters={"value": [[1.0] * 16] * 3}))
         doc.add_node(NodeModel(id="enc", type_name="transformer_encoder", parameters={"d_model": 16, "nhead": 4, "num_layers": 1}))
@@ -181,7 +181,7 @@ class TestCodegen(unittest.TestCase):
         self.assertIn("import torch.nn as nn", code)
 
     def test_export_creation(self):
-        from src.runtime.codegen import export_python
+        from entropia_riko.runtime.codegen import export_python
         doc = GraphDocument()
         doc.add_node(NodeModel(id="z", type_name="zeros", parameters={"shape": [3, 4]}))
         code = export_python(doc)
