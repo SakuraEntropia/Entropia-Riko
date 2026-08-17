@@ -2,12 +2,46 @@
 
 [English](README.md) | 中文
 
+[![PyPI version](https://img.shields.io/pypi/v/entropia-riko.svg)](https://pypi.org/project/entropia-riko/)
+[![GitHub release](https://img.shields.io/github/v/release/SakuraEntropia/Entropia-Riko.svg)](https://github.com/SakuraEntropia/Entropia-Riko/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Entropia Riko 是一个专业的**节点图深度学习编辑器**——ComfyUI 风格的可视化工作流，
 支持 PyTorch（及可选 TensorFlow/Keras），带 Blender 式模块化工作区、实时训练曲线、
 代码导出、插件系统和内置文件管理器。
 
 它既能作为 **Web 应用**（浏览器）运行，也内置 **Electron 壳**，可当**独立桌面应用**
 使用——两种方式任选。
+
+## 安装（PyPI）
+
+```bash
+pip install entropia-riko            # 核心 + API 服务器 + PyTorch
+pip install "entropia-riko[tf]"      # + TensorFlow/Keras 节点
+pip install "entropia-riko[hf]"      # + Hugging Face（Diffusers/Transformers）节点
+```
+
+作为 Python 库使用：
+
+```python
+import entropia_riko
+import entropia_riko.nodes          # 注册全部 194 个内置节点
+from entropia_riko.runtime.registry import default_registry
+
+print(entropia_riko.__version__)                  # "0.1.0"
+print(len(default_registry().list()))             # 194
+```
+
+或启动 API 服务器：
+
+```bash
+entropia-riko                       # FastAPI 运行在 http://127.0.0.1:8000
+# 等价命令：
+python -m uvicorn entropia_riko.server.app:app --port 8000
+```
+
+> pip 包只包含 **Python 运行时**（节点、执行器、代码生成、训练器、子图、API 服务器）。
+> 浏览器/Electron 界面不在 pip 包内——完整编辑器请克隆本仓库。
 
 ## 特性
 
@@ -42,7 +76,7 @@ pip install -r requirements.txt
 npm install
 
 # 终端 1 — API (http://localhost:8000)
-.venv/bin/python -m uvicorn src.server.app:app --reload --port 8000
+.venv/bin/python -m uvicorn entropia_riko.server.app:app --reload --port 8000
 
 # 终端 2 — 前端 (http://localhost:5173)
 npm run dev
@@ -95,15 +129,25 @@ npm run desktop                                       # Electron 桌面壳
 .venv/bin/python scripts/release.py "发布说明"
 ```
 
-输出：`entropia-riko-release.zip`（在**父目录**，不修改工作文件夹）。内含 `src/`、
+输出：`entropia-riko-release.zip`（在**父目录**，不修改工作文件夹）。内含 `entropia_riko/`、
 `public/`、`plugins/`、`examples/`、`templates/`、`electron/`、`scripts/`、
 `tests/`、`docs/`、README 与配置文件——接收者只需 `pip install -r
 requirements.txt` + `npm install` 即可运行。
 
+### PyPI 发布
+
+构建并发布 Python 包（PyPI 上的 `entropia-riko`）：
+
+```bash
+.venv/bin/python -m pip install build twine
+.venv/bin/python -m build --outdir dist-pypi
+.venv/bin/python -m twine upload dist-pypi/*
+```
+
 ## 项目结构
 
 ```
-src/
+entropia_riko/
 ├── ui/         React 应用（画布、面板、代码编辑器、文件管理器…）
 ├── core/       Tensor IR + 图文档模型（.riko/.ric）
 ├── runtime/    注册表、执行器、PyTorch/TF 代码生成、训练器、子图

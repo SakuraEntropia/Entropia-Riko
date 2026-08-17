@@ -2,6 +2,10 @@
 
 [中文](README_CN.md) | English
 
+[![PyPI version](https://img.shields.io/pypi/v/entropia-riko.svg)](https://pypi.org/project/entropia-riko/)
+[![GitHub release](https://img.shields.io/github/v/release/SakuraEntropia/Entropia-Riko.svg)](https://github.com/SakuraEntropia/Entropia-Riko/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Entropia Riko is a professional **node-graph deep-learning editor** — ComfyUI-style
 visual workflows for PyTorch (and optional TensorFlow/Keras), with a modular
 Blender-like workspace, live training curves, code export, a plugin system, and a
@@ -9,6 +13,37 @@ built-in file manager.
 
 It runs as a **web app** (browser) and ships an **Electron shell** so you can use it
 as a **standalone desktop app** — you choose.
+
+## Install (PyPI)
+
+```bash
+pip install entropia-riko            # core + API server + PyTorch
+pip install "entropia-riko[tf]"      # + TensorFlow/Keras nodes
+pip install "entropia-riko[hf]"      # + Hugging Face (Diffusers/Transformers) nodes
+```
+
+Use it as a Python library:
+
+```python
+import entropia_riko
+import entropia_riko.nodes          # registers all 194 built-in nodes
+from entropia_riko.runtime.registry import default_registry
+
+print(entropia_riko.__version__)                  # "0.1.0"
+print(len(default_registry().list()))             # 194
+```
+
+Or launch the API server:
+
+```bash
+entropia-riko                       # FastAPI on http://127.0.0.1:8000
+# equivalent:
+python -m uvicorn entropia_riko.server.app:app --port 8000
+```
+
+> The pip package ships the **Python runtime** (nodes, executor, codegen,
+> trainer, subgraphs, API server). The browser/Electron UI is not in the pip
+> package — clone this repo for the full editor.
 
 ## Features
 
@@ -60,7 +95,7 @@ pip install -r requirements.txt
 npm install
 
 # Terminal 1 — API (http://localhost:8000)
-.venv/bin/python -m uvicorn src.server.app:app --reload --port 8000
+.venv/bin/python -m uvicorn entropia_riko.server.app:app --reload --port 8000
 
 # Terminal 2 — frontend (http://localhost:5173)
 npm run dev
@@ -117,15 +152,25 @@ only tracked files — no `node_modules`, `.venv`, `dist`, caches, or backups):
 ```
 
 Output: `entropia-riko-release.zip` in the **parent directory** (the working
-folder is never modified). It contains `src/`, `public/`, `plugins/`,
+folder is never modified). It contains `entropia_riko/`, `public/`, `plugins/`,
 `examples/`, `templates/`, `electron/`, `scripts/`, `tests/`, `docs/`, the
 READMEs, and config files — everything a recipient needs to `pip install -r
 requirements.txt` + `npm install` and run.
 
+### PyPI release
+
+Build and publish the Python package (`entropia-riko` on PyPI):
+
+```bash
+.venv/bin/python -m pip install build twine
+.venv/bin/python -m build --outdir dist-pypi
+.venv/bin/python -m twine upload dist-pypi/*
+```
+
 ## Project structure
 
 ```
-src/
+entropia_riko/
 ├── ui/         React app (canvas, panels, code editor, file manager, …)
 ├── core/       Tensor IR + graph document model (.riko/.ric)
 ├── runtime/    Registry, executor, PyTorch/TF codegen, trainer, subgraph
