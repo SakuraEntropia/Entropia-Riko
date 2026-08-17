@@ -10,6 +10,8 @@ import copy
 import itertools
 from typing import Any, Callable, Dict, Optional, Tuple, Union
 
+from .types import NON_TENSOR_KINDS
+
 Number = Union[int, float]
 
 
@@ -131,8 +133,8 @@ class TensorValue:
     ) -> None:
         self.data = data
         self._kind = kind
-        if kind in ("text", "json"):
-            # Non-tensor payloads (string / parsed JSON) have no numeric shape.
+        if kind in NON_TENSOR_KINDS:
+            # Non-tensor payloads (text/json/path/dataset/checkpoint/...) have no numeric shape.
             self.shape: Tuple[int, ...] = tuple(shape) if shape is not None else ()
         else:
             self.shape = tuple(shape) if shape is not None else infer_shape(data)
@@ -177,6 +179,9 @@ class TensorValue:
             import json
             s = json.dumps(self.data, ensure_ascii=False)
             return f"json: {s[:120]}{'…' if len(s) > 120 else ''}"
+        if self._kind in NON_TENSOR_KINDS:
+            s = str(self.data)
+            return f"{self._kind}: {s[:120]}{'…' if len(s) > 120 else ''}"
         if self.shape == ():
             return f"scalar {self.dtype} = {self.data}"
         if len(self.shape) == 1 and self.shape[0] <= 8:

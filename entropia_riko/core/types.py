@@ -31,6 +31,12 @@ DATA_KINDS: Tuple[str, ...] = (
     "unknown",       # untyped / pass-through
 )
 
+# Kinds that carry a non-numeric payload (string / dict / path), so they have
+# no tensor shape.
+NON_TENSOR_KINDS = frozenset({
+    "text", "json", "file", "folder", "dataset", "checkpoint", "config", "metadata",
+})
+
 # Subtype → parent widening (a subtype may flow into a parent-kind port).
 # e.g. image_tensor → tensor is allowed, tensor → image_tensor is not.
 _PORT_HIERARCHY = {

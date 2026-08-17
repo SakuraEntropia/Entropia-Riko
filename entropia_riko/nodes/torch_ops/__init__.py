@@ -3,6 +3,7 @@
 from . import (
     activation,  # noqa: F401
     inference,  # noqa: F401
+    io_nodes,  # noqa: F401  file_input / dataset / checkpoint save-load
     linear,  # noqa: F401
     model_loader,  # noqa: F401
     ops,  # noqa: F401
