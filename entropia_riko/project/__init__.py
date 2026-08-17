@@ -1,5 +1,10 @@
 """Project system: manifest, templates, and workspace operations."""
 
+from .experiment import (
+    hardware_info,
+    list_experiments,
+    record_experiment,
+)
 from .manifest import (
     MANIFEST_FILENAME,
     ProjectManifest,
@@ -36,4 +41,7 @@ __all__ = [
     "scan_project",
     "validate_project",
     "migrate_project",
+    "record_experiment",
+    "list_experiments",
+    "hardware_info",
 ]

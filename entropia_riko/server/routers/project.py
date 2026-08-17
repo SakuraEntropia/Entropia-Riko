@@ -11,7 +11,9 @@ from ...core.document import GraphDocument
 from ...project import (
     PROJECT_TEMPLATES,
     create_project,
+    list_experiments,
     migrate_project,
+    record_experiment,
     scan_project,
     validate_project,
 )
@@ -58,6 +60,28 @@ def project_migrate() -> Dict[str, Any]:
         return {"status": "success", **result}
     except Exception as exc:
         return {"status": "error", "error": f"{type(exc).__name__}: {exc}"}
+
+
+@router.post("/api/project/experiment")
+def project_record_experiment(body: Dict[str, Any]) -> Dict[str, Any]:
+    """Record an experiment under the working project (workflow + params + metrics)."""
+    try:
+        exp = record_experiment(
+            get_working_root(),
+            workflow=body.get("workflow", {}),
+            parameters=body.get("parameters", {}),
+            metrics=body.get("metrics", {}),
+            seed=body.get("seed"),
+        )
+        return {"status": "success", "experiment": exp.name}
+    except Exception as exc:
+        return {"status": "error", "error": f"{type(exc).__name__}: {exc}"}
+
+
+@router.get("/api/project/experiments")
+def project_list_experiments() -> Dict[str, Any]:
+    """List recorded experiments under the working project."""
+    return {"experiments": list_experiments(get_working_root())}
 
 
 @router.get("/api/project/tree")
