@@ -1,10 +1,20 @@
-# Entropia Riko
+<p align="center">
+  <img src="https://raw.githubusercontent.com/SakuraEntropia/Entropia-Riko/main/public/brand/readme-logo.png" alt="Entropia Riko logo" width="128" />
+</p>
+
+<h1 align="center">Entropia Riko</h1>
+
+<p align="center">
+  <a href="https://pypi.org/project/entropia-riko/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/entropia-riko.svg" /></a>
+  <a href="https://github.com/SakuraEntropia/Entropia-Riko/releases"><img alt="GitHub release" src="https://img.shields.io/github/v/release/SakuraEntropia/Entropia-Riko.svg" /></a>
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/SakuraEntropia/Entropia-Riko/main/public/brand/readme-hero.jpg" alt="Entropia Riko hero" width="100%" />
+</p>
 
 [English](README.md) | 中文
-
-[![PyPI version](https://img.shields.io/pypi/v/entropia-riko.svg)](https://pypi.org/project/entropia-riko/)
-[![GitHub release](https://img.shields.io/github/v/release/SakuraEntropia/Entropia-Riko.svg)](https://github.com/SakuraEntropia/Entropia-Riko/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Entropia Riko 是一个专业的**节点图深度学习编辑器**——ComfyUI 风格的可视化工作流，
 支持 PyTorch（及可选 TensorFlow/Keras），带 Blender 式模块化工作区、实时训练曲线、

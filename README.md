@@ -1,10 +1,20 @@
-# Entropia Riko
+<p align="center">
+  <img src="https://raw.githubusercontent.com/SakuraEntropia/Entropia-Riko/main/public/brand/readme-logo.png" alt="Entropia Riko logo" width="128" />
+</p>
+
+<h1 align="center">Entropia Riko</h1>
+
+<p align="center">
+  <a href="https://pypi.org/project/entropia-riko/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/entropia-riko.svg" /></a>
+  <a href="https://github.com/SakuraEntropia/Entropia-Riko/releases"><img alt="GitHub release" src="https://img.shields.io/github/v/release/SakuraEntropia/Entropia-Riko.svg" /></a>
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/SakuraEntropia/Entropia-Riko/main/public/brand/readme-hero.jpg" alt="Entropia Riko hero" width="100%" />
+</p>
 
 [中文](README_CN.md) | English
-
-[![PyPI version](https://img.shields.io/pypi/v/entropia-riko.svg)](https://pypi.org/project/entropia-riko/)
-[![GitHub release](https://img.shields.io/github/v/release/SakuraEntropia/Entropia-Riko.svg)](https://github.com/SakuraEntropia/Entropia-Riko/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Entropia Riko is a professional **node-graph deep-learning editor** — ComfyUI-style
 visual workflows for PyTorch (and optional TensorFlow/Keras), with a modular
