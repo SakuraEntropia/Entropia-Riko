@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Entropia Riko — 节点图深度学习编辑器</title>
 <meta name="description" content="Entropia Riko 是一个专业的节点图深度学习编辑器：ComfyUI 风格可视化工作流，支持 PyTorch，带代码导出、训练曲线、插件与子图。pip install entropia-riko。" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c5cff'/%3E%3Cstop offset='1' stop-color='%23ff5c8a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Arial,Helvetica,sans-serif' font-size='38' font-weight='700' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="brand/logo.ico" sizes="any" />
+<link rel="icon" type="image/png" href="brand/favicon.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png" />
 <style>
   :root {
     --bg: #0a0a16;
@@ -40,9 +42,7 @@
   }
   .logo {
     width: 52px; height: 52px; border-radius: 14px; flex: 0 0 auto;
-    background: linear-gradient(135deg, var(--purple), var(--pink));
-    display: grid; place-items: center;
-    font-size: 26px; font-weight: 800; color: #fff;
+    object-fit: cover;
     box-shadow: 0 8px 24px rgba(124,92,255,.4);
   }
   .brand-name { font-size: 20px; font-weight: 700; letter-spacing: .3px; }
@@ -130,7 +130,7 @@
 <div class="wrap">
 
   <header>
-    <div class="logo">R</div>
+    <img class="logo" src="brand/logo.png" alt="Entropia Riko" width="52" height="52" />
     <div>
       <div class="brand-name">Entropia Riko</div>
       <div class="brand-sub">节点图深度学习编辑器 · Node-graph DL editor</div>
