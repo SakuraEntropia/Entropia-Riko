@@ -8,6 +8,7 @@ from collections import deque
 from typing import Any, Dict, List, Optional
 
 from ..core.document import GraphDocument
+from ..core.types import is_compatible
 from .registry import Registry, default_registry
 
 
@@ -48,6 +49,25 @@ def validate(doc: GraphDocument, registry: Optional[Registry] = None) -> List[st
                 errors.append(
                     f"连接 {e.id}: 节点 '{e.target_node}'({dst.type_name})"
                     f"无输入端口 '{e.target_port}'"
+                )
+
+        # Strong-typed ports: the source output kind must flow into the target
+        # input kind (e.g. text → audio is rejected).
+        if src.type_name in reg and dst.type_name in reg:
+            src_cls = reg.get(src.type_name)
+            dst_cls = reg.get(dst.type_name)
+            src_kind = next(
+                (o.data_kind for o in src_cls.outputs if o.name == e.source_port),
+                "unknown",
+            )
+            dst_kind = next(
+                (i.data_kind for i in dst_cls.inputs if i.name == e.target_port),
+                "unknown",
+            )
+            if not is_compatible(src_kind, dst_kind):
+                errors.append(
+                    f"连接 {e.id}: 类型不兼容 {src_kind} → {dst_kind} "
+                    f"('{e.source_node}.{e.source_port}' → '{e.target_node}.{e.target_port}')"
                 )
 
     # Required inputs must be connected.

@@ -12,16 +12,6 @@ from typing import Any, Callable, Dict, Optional, Tuple, Union
 
 Number = Union[int, float]
 
-# DATA_FORMAT.md — first data kinds.
-DATA_KINDS: Tuple[str, ...] = (
-    "scalar",
-    "tensor",
-    "image_tensor",
-    "model",
-    "text",
-    "unknown",
-)
-
 
 def _is_number(x: Any) -> bool:
     return isinstance(x, (int, float)) and not isinstance(x, bool)
