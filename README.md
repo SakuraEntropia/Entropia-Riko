@@ -73,6 +73,15 @@ python -m uvicorn entropia_riko.server.app:app --port 8000
 - **Train-to-model / load-from-model** — `save_model` + `model_loader` file nodes
   (Houdini-style file picker on the `path` parameter) persist/restore model
   weights as **safetensors** or torch state_dicts.
+- **IDE-style project system** — a folder is a project (`project.riko` manifest);
+  5 AI templates (Empty / CV / Diffusion / Audio / Video) generate a full
+  structure (`datasets/`, `models/`, `checkpoints/`, `workflows/`, `experiments/`, …).
+- **Strong-typed ports** — 18 data kinds (`dataset`, `checkpoint`, `model`,
+  `image_tensor`, `embedding`, …); incompatible connections are rejected.
+- **Professional pipeline nodes** — `file_input`, `dataset`, `checkpoint_save`/
+  `checkpoint_load` with project-relative paths.
+- **Reproducibility** — bake/cache with provenance + experiment records
+  (workflow/params/metrics/hardware) + multi-workflow dependency graph.
 - **Clean code export** — PyTorch `nn.Module` and TensorFlow `tf.keras.Model`.
 - **Multi-file project export** — File → Export Code → **Export Project…** writes a
   GitHub-layout PyTorch repo (`README.md`, `requirements.txt`, `src/<name>.py`)
