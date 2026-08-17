@@ -12,10 +12,11 @@ export interface PortDef {
 export interface ParamDef {
   name: string;
   label: string;
-  kind: "scalar" | "any";
+  kind: "scalar" | "any" | "path";
   default: unknown;
   required: boolean;
   dtype?: string;
+  browse?: "open" | "save";
 }
 
 export interface NodeDef {

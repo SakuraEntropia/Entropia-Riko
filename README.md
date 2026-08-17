@@ -60,6 +60,9 @@ python -m uvicorn entropia_riko.server.app:app --port 8000
 - **Code editor** — a Notepad-style window (File/Edit menus + toolbar: New, Open,
   Save, Undo/Redo, Cut/Copy/Paste) for previewing/editing exported PyTorch code.
 - **Train + live loss curve** — stream per-step loss (SSE) into an SVG chart.
+- **Train-to-model / load-from-model** — `save_model` + `model_loader` file nodes
+  (Houdini-style file picker on the `path` parameter) persist/restore model
+  weights as **safetensors** or torch state_dicts.
 - **Clean code export** — PyTorch `nn.Module` and TensorFlow `tf.keras.Model`.
 - **Multi-file project export** — File → Export Code → **Export Project…** writes a
   GitHub-layout PyTorch repo (`README.md`, `requirements.txt`, `src/<name>.py`)
@@ -84,6 +87,30 @@ python -m uvicorn entropia_riko.server.app:app --port 8000
 - **Themes** — Light / Dark / System / **Liquid Glass** (Apple-style translucent).
 - **Detachable floating windows** — all dialogs are draggable windows.
 - **Binary `.ric`** format + ASCII `.riko` format with full metadata/settings.
+
+## Train → Save → Load → Infer
+
+Models flow through the graph as `model` values and persist to disk via two
+file nodes (Houdini-style — the `path` parameter has a file picker):
+
+- **`save_model` (train-to-model)** — serialize a model's `state_dict` to
+  `.safetensors` (default) or `.pt`/`.pth`.
+- **`model_loader` (load-from-model)** — load a `state_dict` back; set the
+  `module` parameter (or feed a `template`) to rebuild the model structure and
+  make it callable again.
+
+`/api/train` also accepts `save_path` to persist the fitted model right after
+training. Example graphs ship in `train` + `infer` pairs (e.g.
+`examples/models/cnn_train.riko` + `cnn_infer.riko`), each showing the loop:
+
+```bash
+# 1) train the CNN and write cnn.safetensors
+curl -X POST http://127.0.0.1:8000/api/train \
+  -H "Content-Type: application/json" \
+  -d '{"doc": <cnn_train.riko>, "steps": 20, "save_path": "cnn.safetensors"}'
+
+# 2) run cnn_infer.riko — it loads cnn.safetensors and runs inference
+```
 
 ## Quick Start (browser)
 

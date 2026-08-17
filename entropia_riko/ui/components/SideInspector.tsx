@@ -2,6 +2,7 @@
  * Inputs / Outputs / Preview). */
 import { useState, type CSSProperties } from "react";
 import { useGraphStore } from "../store/graphStore";
+import { openFilePicker } from "./FilePicker";
 
 // Fixed tab order shown in the left tag strip; each id maps to a section below.
 const TABS = [
@@ -100,7 +101,7 @@ function ParamsSection({
   onParam,
 }: {
   node: { data: { params: Record<string, unknown> } };
-  def: { parameters: { name: string; label: string; dtype?: string }[] } | undefined;
+  def: { parameters: { name: string; label: string; dtype?: string; kind?: string; browse?: "open" | "save" }[] } | undefined;
   onParam: (name: string, value: unknown) => void;
 }) {
   return (
@@ -110,17 +111,40 @@ function ParamsSection({
         def.parameters.map((p) => (
           <div className="field" key={p.name}>
             <label>{p.label}</label>
-            <input
-              value={String(node.data.params[p.name] ?? "")}
-              onChange={(e) => {
-                // Coerce numeric fields back to Number so params keep their dtype.
-                const v =
-                  p.dtype === "float" || p.dtype === "int"
-                    ? Number(e.target.value)
-                    : e.target.value;
-                onParam(p.name, v);
-              }}
-            />
+            {p.kind === "path" ? (
+              <div className="path-field" style={{ display: "flex", gap: 6 }}>
+                <input
+                  value={String(node.data.params[p.name] ?? "")}
+                  onChange={(e) => onParam(p.name, e.target.value)}
+                  style={{ flex: 1 }}
+                />
+                <button
+                  className="btn"
+                  onClick={async () => {
+                    const isSave = p.browse === "save";
+                    const chosen = await openFilePicker(
+                      isSave ? "save" : "import",
+                      isSave ? { defaultName: "model.safetensors" } : undefined
+                    );
+                    if (chosen) onParam(p.name, chosen);
+                  }}
+                >
+                  Browse
+                </button>
+              </div>
+            ) : (
+              <input
+                value={String(node.data.params[p.name] ?? "")}
+                onChange={(e) => {
+                  // Coerce numeric fields back to Number so params keep their dtype.
+                  const v =
+                    p.dtype === "float" || p.dtype === "int"
+                      ? Number(e.target.value)
+                      : e.target.value;
+                  onParam(p.name, v);
+                }}
+              />
+            )}
           </div>
         ))
       ) : (

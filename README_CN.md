@@ -55,6 +55,8 @@ python -m uvicorn entropia_riko.server.app:app --port 8000
 - **代码编辑器**：记事本风格（File/Edit 菜单 + 工具栏：新建/打开/保存/撤销/重做/
   剪切/复制/粘贴），用于预览/编辑导出的 PyTorch 代码。
 - **训练 + 实时 Loss 曲线**：SSE 流式逐步回传损失到 SVG 图表。
+- **Train-to-model / load-from-model**：`save_model` + `model_loader` 文件节点
+  （Houdini 式 `path` 参数带文件选择器）以 **safetensors** 或 torch state_dict 保存/恢复模型权重。
 - **干净代码导出**：PyTorch `nn.Module` 与 TensorFlow `tf.keras.Model`。
 - **Asset Library 与 New File**：工作目录文件管理器（文件夹拖拽、右键新建/重命名/删除、
   「展开完整节点」把文件图内联进画布而非子图引用、每个文件的 PyTorch 代码预览）。
@@ -65,6 +67,25 @@ python -m uvicorn entropia_riko.server.app:app --port 8000
 - **主题**：Light / Dark / System / **Liquid Glass**（苹果风格半透明玻璃）。
 - **可脱出浮动窗口**：所有对话框都是可拖拽窗口。
 - **`.rik` 二进制 + `.riko` ASCII 格式**，含完整 metadata/settings。
+
+## 训练 → 保存 → 加载 → 推理
+
+模型以 `model` 值在图里流动，通过两个文件节点落盘（Houdini 式——`path` 参数带文件选择器）：
+
+- **`save_model`（train-to-model）**：把模型 `state_dict` 序列化到 `.safetensors`（默认）或 `.pt`/`.pth`。
+- **`model_loader`（load-from-model）**：读回 `state_dict`；填 `module` 参数（或接 `template`）重建模型结构、恢复可调用。
+
+`/api/train` 也接受 `save_path`，训练完直接保存模型。示例图成对提供 `train` + `infer`
+（如 `examples/models/cnn_train.riko` + `cnn_infer.riko`），展示完整闭环：
+
+```bash
+# 1) 训练 CNN 并写出 cnn.safetensors
+curl -X POST http://127.0.0.1:8000/api/train \
+  -H "Content-Type: application/json" \
+  -d '{"doc": <cnn_train.riko>, "steps": 20, "save_path": "cnn.safetensors"}'
+
+# 2) 运行 cnn_infer.riko —— 加载 cnn.safetensors 并执行推理
+```
 
 ## 快速开始（浏览器）
 

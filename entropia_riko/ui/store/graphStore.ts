@@ -98,6 +98,7 @@ interface ApiNodeDef {
     default: unknown;
     required: boolean;
     dtype: string | null;
+    browse?: string | null;
   }[];
 }
 
@@ -127,10 +128,11 @@ export function apiNodeToDef(n: ApiNodeDef): NodeDef {
     parameters: n.parameters.map((p): ParamDef => ({
       name: p.name,
       label: labelize(p.name),
-      kind: p.kind as "scalar" | "any",
+      kind: p.kind as "scalar" | "any" | "path",
       default: p.default,
       required: p.required,
       dtype: p.dtype ?? undefined,
+      browse: (p.browse as "open" | "save") ?? undefined,
     })),
   };
 }

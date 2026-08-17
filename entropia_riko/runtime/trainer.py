@@ -58,3 +58,33 @@ def train_graph(
 ) -> List[float]:
     """Run `steps` optimizer steps; return the loss history."""
     return [item["loss"] for item in iter_losses(doc, steps=steps, lr=lr, registry=registry)]
+
+
+def train_and_save(
+    doc: GraphDocument,
+    save_path: str,
+    steps: int = 20,
+    lr: float = 1e-3,
+    wd: float = 0.0,
+    registry: Optional[Registry] = None,
+) -> List[float]:
+    """Train a self-contained graph, then save the fitted model to `save_path`.
+
+    The format is chosen by the file extension (`.safetensors` → safetensors
+    state_dict; otherwise a full `torch.save` object). Returns the loss history.
+    """
+    import torch.optim as optim
+
+    from ..nodes.torch_ops.model_loader import _save_model
+
+    model = _build_model(doc, registry)
+    optimizer = optim.AdamW(model.parameters(), lr=float(lr), weight_decay=float(wd))
+    losses: List[float] = []
+    for _ in range(int(steps)):
+        optimizer.zero_grad()
+        loss = model()
+        loss.backward()
+        optimizer.step()
+        losses.append(float(loss.item()))
+    _save_model(model, save_path, "auto")
+    return losses

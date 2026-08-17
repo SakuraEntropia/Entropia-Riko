@@ -1,0 +1,220 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "mlp_train",
+    "description": "Train flow for 'mlp': random data -> inline mlp layers -> MSE loss. Run via /api/train with save_path=mlp.safetensors (train-to-model).",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "output",
+        "data_kind": "tensor"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "data1",
+      "type_name": "dataloader",
+      "label": "Input Data",
+      "category": "Data",
+      "position": [
+        40,
+        150
+      ],
+      "parameters": {
+        "batch_size": 32,
+        "channels": 1,
+        "height": 1,
+        "width": 8,
+        "device": "cpu"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "f1",
+      "type_name": "flatten",
+      "label": "Flatten",
+      "category": "Shape",
+      "position": [
+        200,
+        150
+      ],
+      "parameters": {
+        "start_dim": 1,
+        "end_dim": -1,
+        "device": "cpu"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "fc1",
+      "type_name": "linear",
+      "label": "Linear 8→16",
+      "category": "Neural",
+      "position": [
+        440,
+        200
+      ],
+      "parameters": {
+        "in_features": 8,
+        "out_features": 16
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "act",
+      "type_name": "relu",
+      "label": "ReLU",
+      "category": "Neural",
+      "position": [
+        640,
+        200
+      ],
+      "parameters": {},
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "fc2",
+      "type_name": "linear",
+      "label": "Linear 16→4",
+      "category": "Neural",
+      "position": [
+        840,
+        200
+      ],
+      "parameters": {
+        "in_features": 16,
+        "out_features": 4
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "data2",
+      "type_name": "dataloader",
+      "label": "Target Data",
+      "category": "Data",
+      "position": [
+        40,
+        320
+      ],
+      "parameters": {
+        "batch_size": 32,
+        "channels": 1,
+        "height": 1,
+        "width": 4,
+        "device": "cpu"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "f2",
+      "type_name": "flatten",
+      "label": "Flatten",
+      "category": "Shape",
+      "position": [
+        200,
+        320
+      ],
+      "parameters": {
+        "start_dim": 1,
+        "end_dim": -1,
+        "device": "cpu"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "loss",
+      "type_name": "mse_loss",
+      "label": "MSE Loss",
+      "category": "Loss",
+      "position": [
+        1040,
+        200
+      ],
+      "parameters": {},
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "gout",
+      "type_name": "graph_output",
+      "label": "Loss",
+      "category": "Subgraph",
+      "position": [
+        1260,
+        200
+      ],
+      "parameters": {
+        "name": "output"
+      },
+      "inputs": [],
+      "outputs": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_in",
+      "source_node": "data1",
+      "source_port": "data",
+      "target_node": "f1",
+      "target_port": "x"
+    },
+    {
+      "id": "e_first",
+      "source_node": "f1",
+      "source_port": "result",
+      "target_node": "fc1",
+      "target_port": "x"
+    },
+    {
+      "id": "e1",
+      "source_node": "fc1",
+      "source_port": "output",
+      "target_node": "act",
+      "target_port": "x"
+    },
+    {
+      "id": "e2",
+      "source_node": "act",
+      "source_port": "output",
+      "target_node": "fc2",
+      "target_port": "x"
+    },
+    {
+      "id": "e_t",
+      "source_node": "data2",
+      "source_port": "data",
+      "target_node": "f2",
+      "target_port": "x"
+    },
+    {
+      "id": "e_pred",
+      "source_node": "fc2",
+      "source_port": "output",
+      "target_node": "loss",
+      "target_port": "pred"
+    },
+    {
+      "id": "e_tgt",
+      "source_node": "f2",
+      "source_port": "result",
+      "target_node": "loss",
+      "target_port": "target"
+    },
+    {
+      "id": "e_out",
+      "source_node": "loss",
+      "source_port": "loss",
+      "target_node": "gout",
+      "target_port": "value"
+    }
+  ],
+  "settings": {}
+}

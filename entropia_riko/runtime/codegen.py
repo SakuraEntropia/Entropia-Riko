@@ -726,8 +726,52 @@ class _Emitter:
                     f"{p.get('height', 28)}, {p.get('width', 28)})"
                 )
             elif t == "model_loader":
+                helper = self._add_helper(
+                    f"_load_model_{_sanitize(nid)}",
+                    [
+                        f"def _load_model_{_sanitize(nid)}(path, template=None, device={_lit(p.get('device', 'cpu'))}):",
+                        "    import torch",
+                        "    from pathlib import Path",
+                        "    path = Path(path).expanduser()",
+                        "    if not path.exists():",
+                        "        raise FileNotFoundError(f'模型文件不存在: {path}')",
+                        "    if path.suffix.lower() == '.safetensors':",
+                        "        from safetensors.torch import load_file",
+                        "        state = load_file(str(path), device=device)",
+                        "        if template is not None and hasattr(template, 'load_state_dict'):",
+                        "            template.load_state_dict(state)",
+                        "            return template",
+                        "        return state",
+                        "    obj = torch.load(str(path), map_location=device, weights_only=False)",
+                        "    if isinstance(obj, dict) and template is not None and hasattr(template, 'load_state_dict'):",
+                        "        template.load_state_dict(obj)",
+                        "        return template",
+                        "    return obj",
+                    ],
+                )
                 forward_lines.append(
-                    f"{dst} = torch.load({_lit(p.get('path'))}, map_location={_lit(p.get('device', 'cpu'))}, weights_only=False)"
+                    f"{dst} = _load_model_{_sanitize(nid)}({_lit(p.get('path'))}, template={iv.get('template', 'None')})"
+                )
+            elif t == "save_model":
+                helper = self._add_helper(
+                    f"_save_model_{_sanitize(nid)}",
+                    [
+                        f"def _save_model_{_sanitize(nid)}(path, model, fmt='auto'):",
+                        "    import torch",
+                        "    from pathlib import Path",
+                        "    path = Path(path).expanduser()",
+                        "    path.parent.mkdir(parents=True, exist_ok=True)",
+                        "    if path.suffix.lower() == '.safetensors' and fmt in ('auto', 'safetensors'):",
+                        "        from safetensors.torch import save_file",
+                        "        state = model.state_dict() if hasattr(model, 'state_dict') else model",
+                        "        save_file(state, str(path))",
+                        "    else:",
+                        "        torch.save(model, str(path))",
+                        "    return str(path)",
+                    ],
+                )
+                forward_lines.append(
+                    f"{dst} = _save_model_{_sanitize(nid)}({_lit(p.get('path'))}, {iv.get('model', 'None')}, {_lit(p.get('format', 'auto'))})"
                 )
             elif t == "text_loader":
                 forward_lines.append(f"{dst} = open({_lit(p.get('path'))}, encoding=\"utf-8\").read()")

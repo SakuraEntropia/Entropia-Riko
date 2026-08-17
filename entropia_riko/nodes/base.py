@@ -43,6 +43,7 @@ class Parameter:
         required: bool = False,
         choices: Optional[List[Any]] = None,
         dtype: Optional[str] = None,
+        browse: Optional[str] = None,
     ) -> None:
         self.name = name
         self.kind = kind
@@ -50,6 +51,7 @@ class Parameter:
         self.required = required
         self.choices = choices
         self.dtype = dtype
+        self.browse = browse
 
 
 class BaseNode:

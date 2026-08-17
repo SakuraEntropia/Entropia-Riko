@@ -30,7 +30,7 @@ from ..runtime.executor import execute, RuntimeExecutionError
 from ..runtime.registry import default_registry
 from ..runtime.codegen import export_python, export_python_project
 from ..runtime.codegen_tf import export_keras
-from ..runtime.trainer import train_graph, iter_losses
+from ..runtime.trainer import train_graph, iter_losses, train_and_save
 from ..runtime.subgraph import PROJECT_ROOT, MODULE_SEARCH_PATHS, resolve_graph_file
 
 # Load user plugins (registers any plugin-provided node types).
@@ -108,6 +108,7 @@ def get_nodes() -> Dict[str, Any]:
                         "default": p.default,
                         "required": p.required,
                         "dtype": p.dtype,
+                        "browse": getattr(p, "browse", None),
                     }
                     for p in cls.parameters
                 ],
@@ -313,12 +314,21 @@ async def decode_file(request: Request) -> Dict[str, Any]:
 
 @app.post("/api/train")
 def train_graph_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
-    """Train a self-contained graph (data loader + loss) and return loss history."""
+    """Train a self-contained graph (data loader + loss) and return loss history.
+
+    Pass ``save_path`` to also persist the fitted model to disk ("train to
+    model"): `.safetensors` saves a safetensors state_dict, otherwise a full
+    `torch.save` object is written.
+    """
     try:
         doc = GraphDocument.from_dict(body.get("doc", body))
         steps = int(body.get("steps", 20))
         lr = float(body.get("lr", 1e-3))
         wd = float(body.get("wd", 0.0))
+        save_path = str(body.get("save_path", "")).strip()
+        if save_path:
+            losses = train_and_save(doc, save_path, steps=steps, lr=lr, wd=wd)
+            return {"status": "success", "losses": losses, "saved": save_path}
         losses = train_graph(doc, steps=steps, lr=lr)
         return {"status": "success", "losses": losses}
     except Exception as exc:

@@ -17,6 +17,7 @@ uvicorn>=0.30
 torch>=2.0
 torchvision>=0.15
 numpy>=1.24
+safetensors>=0.4
 
 # Optional backend: TensorFlow / Keras nodes (uncomment to enable).
 # The editor runs fine without it; TF nodes then raise a clear error on execute.
@@ -27,4 +28,3 @@ numpy>=1.24
 # diffusers>=0.25
 # transformers>=4.36
 # accelerate>=0.25
-# safetensors>=0.4

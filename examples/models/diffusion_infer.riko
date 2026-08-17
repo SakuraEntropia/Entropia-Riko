@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "metadata": {
-    "name": "mnist_infer",
-    "description": "MNIST inference via load-from-model: load mnist_cnn.safetensors (structure rebuilt from mnist.riko) then run inference. Train mnist_cnn.riko first (POST /api/train with save_path=mnist_cnn.safetensors).",
+    "name": "diffusion_infer",
+    "description": "Inference flow for 'diffusion': load diffusion.safetensors (load-from-model, structure rebuilt from diffusion.riko) then run inference. Train via /api/train with save_path=diffusion.safetensors.",
     "inputs": [
       {
         "name": "input",
@@ -42,8 +42,8 @@
         150
       ],
       "parameters": {
-        "path": "mnist_cnn.safetensors",
-        "module": "mnist",
+        "path": "diffusion.safetensors",
+        "module": "diffusion",
         "device": "cpu"
       },
       "inputs": [],
