@@ -4,14 +4,12 @@ from __future__ import annotations
 
 import unittest
 
+import entropia_riko.nodes  # noqa: F401  触发节点注册
 from entropia_riko.core.document import GraphDocument
 from entropia_riko.core.types import DATA_KINDS, is_compatible, normalize
-from entropia_riko.runtime.executor import validate
-from entropia_riko.runtime.registry import Registry
-
-import entropia_riko.nodes  # noqa: F401  触发节点注册
 from entropia_riko.nodes.base import BaseNode, NodeInput, NodeOutput
-from entropia_riko.runtime.registry import register
+from entropia_riko.runtime.executor import validate
+from entropia_riko.runtime.registry import Registry, register
 
 
 class TestTypeCompatibility(unittest.TestCase):
