@@ -6,7 +6,8 @@ live loss curve); ``train_graph`` returns the full history at once.
 """
 from __future__ import annotations
 
-from typing import Any, Dict, Iterator, List, Optional
+from collections.abc import Iterator
+from typing import Any, Dict, List, Optional
 
 from ..core.document import GraphDocument
 from .codegen import export_python

@@ -12,11 +12,11 @@ except ImportError:
     TORCH_AVAILABLE = False
 
 import entropia_riko.nodes  # noqa: F401  触发全部节点注册（含 import）
-from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel
+from entropia_riko.core.document import EdgeModel, GraphDocument, NodeModel
 from entropia_riko.core.tensor import TensorValue
-from entropia_riko.runtime.registry import default_registry
-from entropia_riko.runtime.subgraph import resolve_graph_file, PROJECT_ROOT
 from entropia_riko.runtime.codegen import export_python
+from entropia_riko.runtime.registry import default_registry
+from entropia_riko.runtime.subgraph import PROJECT_ROOT, resolve_graph_file
 
 
 class TestSubgraphResolution(unittest.TestCase):

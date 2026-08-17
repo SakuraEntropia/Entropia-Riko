@@ -14,9 +14,9 @@ except ImportError:
     torch = None
 
 import entropia_riko.nodes  # noqa: F401  触发节点注册（含 torch_ops）
-from entropia_riko.core.tensor import TensorValue
+from entropia_riko.backend.converter import from_torch, to_torch
 from entropia_riko.backend.device import resolve_device
-from entropia_riko.backend.converter import to_torch, from_torch
+from entropia_riko.core.tensor import TensorValue
 from entropia_riko.runtime.registry import default_registry
 
 
@@ -98,7 +98,7 @@ class TestTorchOps(unittest.TestCase):
         self.assertEqual(out["result"].item(), 20.0)
 
     def test_torch_add_via_executor(self):
-        from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel
+        from entropia_riko.core.document import EdgeModel, GraphDocument, NodeModel
         from entropia_riko.runtime.executor import execute
 
         doc = GraphDocument()
@@ -141,7 +141,7 @@ class TestNeuralNodes(unittest.TestCase):
         self.assertEqual(out["output"].to_list(), [0.0, 2.0, 0.0])
 
     def test_linear_relu_graph(self):
-        from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel
+        from entropia_riko.core.document import EdgeModel, GraphDocument, NodeModel
         from entropia_riko.runtime.executor import execute
 
         doc = GraphDocument()

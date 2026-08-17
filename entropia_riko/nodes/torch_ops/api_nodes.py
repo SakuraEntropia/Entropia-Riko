@@ -5,16 +5,16 @@ torch at import time; if torch is unavailable, this module is skipped.
 """
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from ..base import BaseNode, NodeInput, NodeOutput, Parameter
-from ...runtime.registry import register
-from ...backend.converter import to_torch, from_torch
+from ...backend.converter import from_torch, to_torch
 from ...backend.device import resolve_device
+from ...runtime.registry import register
+from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 
 
 def _dev(params: Dict[str, Any]):

@@ -18,9 +18,9 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, Set, Tuple
 
 from ..core.document import GraphDocument
+from .codegen import _dim, _lit, _sanitize, _tuple_lit
 from .executor import execution_order
 from .registry import Registry, default_registry
-from .codegen import _sanitize, _lit, _tuple_lit, _dim
 
 
 def _keras_pad(pad: Any) -> str:
@@ -372,8 +372,8 @@ def export_keras(doc: GraphDocument, registry: Optional[Registry] = None) -> str
 
     ret = returns[-1] if len(returns) == 1 else ("(" + ", ".join(returns) + ")" if returns else (last_var or "None"))
 
-    init_code = "\n".join(f"        {l}" for l in init_lines) if init_lines else "        pass"
-    call_code = "\n".join(f"        {l}" for l in call_lines) if call_lines else "        pass"
+    init_code = "\n".join(f"        {line}" for line in init_lines) if init_lines else "        pass"
+    call_code = "\n".join(f"        {line}" for line in call_lines) if call_lines else "        pass"
     args = ", ".join(params)
 
     return (

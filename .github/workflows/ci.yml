@@ -32,6 +32,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Lint (ruff)
+        run: |
+          pip install ruff
+          ruff check entropia_riko tests
+
       - name: Run unittest
         run: python -m unittest discover -s tests -t .
 

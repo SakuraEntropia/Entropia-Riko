@@ -17,10 +17,10 @@ except ImportError:
     nn = None
 
 import entropia_riko.nodes  # noqa: F401  触发全部节点注册
+from entropia_riko.core.document import EdgeModel, GraphDocument, NodeModel
 from entropia_riko.core.tensor import TensorValue
-from entropia_riko.runtime.registry import default_registry
-from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel
 from entropia_riko.runtime.executor import execute
+from entropia_riko.runtime.registry import default_registry
 
 
 @unittest.skipUnless(TORCH_AVAILABLE, "torch 未安装")

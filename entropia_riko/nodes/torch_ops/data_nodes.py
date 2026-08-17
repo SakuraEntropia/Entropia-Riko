@@ -5,14 +5,12 @@ Requires torch at import time.
 """
 from __future__ import annotations
 
-from typing import Any, Dict
-
 import torch
 
-from ..base import BaseNode, NodeInput, NodeOutput, Parameter
-from ...runtime.registry import register
-from ...backend.converter import to_torch, from_torch
+from ...backend.converter import from_torch, to_torch
 from ...backend.device import resolve_device
+from ...runtime.registry import register
+from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 
 
 # ----------------------------------------------------------------- MNIST
@@ -111,7 +109,7 @@ class CsvLoaderNode(BaseNode):
         delim = params.get("delimiter", ",")
         skip = int(params.get("skip_header", 1))
         rows = []
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             reader = csv.reader(f, delimiter=delim)
             for _ in range(skip):
                 next(reader, None)

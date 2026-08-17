@@ -218,13 +218,13 @@ class _Emitter:
             "        super().__init__()",
         ]
         if init:
-            lines += [f"        {l}" for l in init]
+            lines += [f"        {line}" for line in init]
         else:
             lines.append("        pass")
         lines.append("")
         lines.append(f"    {sig}")
         if fwd:
-            lines += [f"        {l}" for l in fwd]
+            lines += [f"        {line}" for line in fwd]
         else:
             lines.append("        pass")
         lines.append(f"        return {ret}")

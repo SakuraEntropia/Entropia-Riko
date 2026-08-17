@@ -5,4 +5,4 @@ and (optionally) Python entry modules that register nodes. See
 `docs/PLUGINS.md` for the interface and format.
 """
 
-from .loader import load_plugins, PLUGINS_DIR, loaded_plugins  # noqa: F401
+from .loader import PLUGINS_DIR, load_plugins, loaded_plugins  # noqa: F401

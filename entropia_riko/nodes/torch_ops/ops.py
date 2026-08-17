@@ -8,11 +8,11 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from ..base import BaseNode, NodeInput, NodeOutput, Parameter
+from ...backend.converter import from_torch, to_torch
+from ...backend.device import resolve_device
 from ...core.tensor import TensorValue  # noqa: F401  part of contract surface
 from ...runtime.registry import register
-from ...backend.converter import to_torch, from_torch
-from ...backend.device import resolve_device
+from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 
 
 @register("torch_add")

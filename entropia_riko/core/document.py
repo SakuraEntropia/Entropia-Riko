@@ -27,7 +27,7 @@ class PortModel:
         }
 
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]) -> "PortModel":
+    def from_dict(cls, d: Dict[str, Any]) -> PortModel:
         return cls(
             name=d["name"],
             label=d.get("label", d["name"]),
@@ -62,7 +62,7 @@ class NodeModel:
         }
 
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]) -> "NodeModel":
+    def from_dict(cls, d: Dict[str, Any]) -> NodeModel:
         return cls(
             id=d["id"],
             type_name=d["type_name"],
@@ -95,7 +95,7 @@ class EdgeModel:
         }
 
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]) -> "EdgeModel":
+    def from_dict(cls, d: Dict[str, Any]) -> EdgeModel:
         return cls(
             id=d["id"],
             source_node=d["source_node"],
@@ -150,7 +150,7 @@ class GraphDocument:
         }
 
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]) -> "GraphDocument":
+    def from_dict(cls, d: Dict[str, Any]) -> GraphDocument:
         doc = cls(version=d.get("version", "1.0"))
         doc.metadata = dict(d.get("metadata", {}))
         for n in d.get("nodes", []):
@@ -175,7 +175,7 @@ class GraphDocument:
         return _RIC_MAGIC + _RIC_VERSION + zlib.compress(payload)
 
     @classmethod
-    def from_binary(cls, data: bytes) -> "GraphDocument":
+    def from_binary(cls, data: bytes) -> GraphDocument:
         """Deserialize a binary ``.ric`` file back to a GraphDocument."""
         import json
         import zlib

@@ -10,9 +10,9 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from ..base import BaseNode, NodeInput, NodeOutput, Parameter
+from ...backend.converter import from_torch, to_torch
 from ...runtime.registry import register
-from ...backend.converter import to_torch, from_torch
+from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 
 
 @register("wrangle")

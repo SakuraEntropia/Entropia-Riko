@@ -18,8 +18,8 @@ import json
 from pathlib import Path
 from typing import Any, Dict
 
-from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 from ...runtime.registry import register
+from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 
 
 def _state_dict(model: Any) -> Dict[str, Any]:

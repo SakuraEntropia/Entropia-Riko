@@ -8,14 +8,13 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Dict
 
 import torch
 
-from ..base import BaseNode, NodeInput, NodeOutput, Parameter
-from ...runtime.registry import register
+from ...backend.converter import to_torch
 from ...core.tensor import TensorValue
-from ...backend.converter import to_torch, from_torch
+from ...runtime.registry import register
+from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 
 
 def _load_pil_image(path: str, height: int, width: int):
@@ -35,9 +34,10 @@ def _load_pil_image(path: str, height: int, width: int):
 def _image_thumbnail(tensor, max_size: int = 256) -> str | None:
     """Return a base64 PNG data-URL thumbnail of an image tensor, or None."""
     try:
-        from PIL import Image
-        import io
         import base64
+        import io
+
+        from PIL import Image
         t = tensor.detach().cpu().float()
         if t.ndim == 4:
             t = t[0]

@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional
 
 from ..core.document import GraphDocument
 from .executor import execute as exec_graph
-from .registry import Registry, default_registry
+from .registry import Registry
 
 # Project root (the directory that contains entropia_riko/, examples/, workflows/).
 PROJECT_ROOT = Path(__file__).resolve().parents[2]

@@ -2,9 +2,9 @@
 import unittest
 
 import entropia_riko.nodes  # noqa: F401  触发内置节点注册
-from entropia_riko.plugins.loader import load_plugins, loaded_plugins, PLUGINS_DIR
-from entropia_riko.runtime.registry import default_registry
 from entropia_riko.core.tensor import TensorValue
+from entropia_riko.plugins.loader import load_plugins, loaded_plugins
+from entropia_riko.runtime.registry import default_registry
 
 
 class TestPlugins(unittest.TestCase):

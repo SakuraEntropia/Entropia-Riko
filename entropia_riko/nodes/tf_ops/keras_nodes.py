@@ -10,11 +10,9 @@ layout ``(batch, height, width, channels)`` (unlike torch's channels-first).
 """
 from __future__ import annotations
 
-from typing import Any, Dict, List
-
-from ..base import BaseNode, NodeInput, NodeOutput, Parameter
+from ...backend.tf_converter import from_tf, to_tf
 from ...runtime.registry import register
-from ...backend.tf_converter import to_tf, from_tf
+from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 
 
 def _tf():

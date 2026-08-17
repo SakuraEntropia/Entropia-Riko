@@ -158,7 +158,7 @@ class TensorValue:
         device: str = "cpu",
         metadata: Optional[Dict[str, Any]] = None,
         kind: Optional[str] = None,
-    ) -> "TensorValue":
+    ) -> TensorValue:
         return cls(value, dtype=dtype, device=device, metadata=metadata, kind=kind)
 
     @property

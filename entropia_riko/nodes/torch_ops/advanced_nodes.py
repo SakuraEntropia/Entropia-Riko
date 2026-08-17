@@ -7,16 +7,16 @@ encodings, and a wide set of math / shape / loss ops.
 """
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from ..base import BaseNode, NodeInput, NodeOutput, Parameter
-from ...runtime.registry import register
-from ...backend.converter import to_torch, from_torch
+from ...backend.converter import from_torch, to_torch
 from ...backend.device import resolve_device
+from ...runtime.registry import register
+from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 
 
 def _dev(params: Dict[str, Any]):
@@ -395,8 +395,8 @@ class RMSNormNode(BaseNode):
         x = to_torch(inputs["x"], d)
         dim = int(params["dim"])
         eps = float(params["eps"])
-        w = torch.ones(x.size(-1), device=d)
-        rms = x.pow(2).mean(dim=-1, keepdim=True).add(eps).sqrt()
+        w = torch.ones(x.size(dim), device=d)
+        rms = x.pow(2).mean(dim=dim, keepdim=True).add(eps).sqrt()
         y = x / rms * w
         return {"output": from_torch(y, metadata={"backend": "torch"})}
 

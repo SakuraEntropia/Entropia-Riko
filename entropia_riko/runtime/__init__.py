@@ -4,13 +4,13 @@ Validation, dependency ordering, execution queue, and readable errors.
 Does not import Houdini or torch.
 """
 
-from .registry import Registry, default_registry, register
 from .executor import (
     RuntimeExecutionError,
-    validate,
-    execution_order,
     execute,
+    execution_order,
+    validate,
 )
+from .registry import Registry, default_registry, register
 
 __all__ = [
     "Registry",

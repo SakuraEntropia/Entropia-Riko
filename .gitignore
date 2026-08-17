@@ -19,6 +19,12 @@ dist/
 data/
 outputs/
 
+# Trained model checkpoints (user artifacts)
+*.safetensors
+*.pt
+*.pth
+*.onnx
+
 # OS
 .DS_Store
 Thumbs.db

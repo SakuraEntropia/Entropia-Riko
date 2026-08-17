@@ -11,11 +11,9 @@ name='output').
 """
 from __future__ import annotations
 
-from typing import Any, Dict
-
-from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 from ...runtime.registry import register
 from ...runtime.subgraph import run_subgraph
+from ..base import BaseNode, NodeInput, NodeOutput, Parameter
 
 
 @register("graph_input")

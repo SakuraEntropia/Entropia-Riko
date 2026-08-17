@@ -17,10 +17,10 @@ from typing import Any, Dict
 
 import torch
 
-from ..base import BaseNode, NodeInput, NodeOutput, Parameter
-from ...runtime.registry import register
-from ...core.tensor import TensorValue
 from ...backend.converter import from_torch
+from ...core.tensor import TensorValue
+from ...runtime.registry import register
+from ..base import BaseNode, NodeOutput, Parameter
 
 
 def _warn(msg: str) -> Dict[str, Any]:

@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from ..base import BaseNode, NodeOutput, Parameter
 from ...core.tensor import TensorValue
 from ...runtime.registry import register
+from ..base import BaseNode, NodeOutput, Parameter
 
 
 @register("constant")

@@ -5,15 +5,15 @@
 import unittest
 
 import entropia_riko.nodes  # noqa: F401  触发节点注册
-from entropia_riko.core.document import GraphDocument, NodeModel, EdgeModel
-from entropia_riko.runtime.registry import Registry, default_registry
-from entropia_riko.runtime.executor import (
-    validate,
-    execution_order,
-    execute,
-    RuntimeExecutionError,
-)
+from entropia_riko.core.document import EdgeModel, GraphDocument, NodeModel
 from entropia_riko.nodes.base import BaseNode
+from entropia_riko.runtime.executor import (
+    RuntimeExecutionError,
+    execute,
+    execution_order,
+    validate,
+)
+from entropia_riko.runtime.registry import Registry, default_registry
 
 
 class TestRegistry(unittest.TestCase):
