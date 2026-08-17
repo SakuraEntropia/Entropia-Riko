@@ -304,7 +304,7 @@ body { font-family: var(--font); font-size: 14px; color: var(--color-text); back
 .welcome { width: 640px; max-width: 92vw; height: 86vh; max-height: 760px; background: var(--color-surface); border-radius: 10px; box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35); display: flex; flex-direction: column; overflow: hidden; }
 /* Header-image slot: replace public/brand/hero.jpg (JPEG bitmap, 960×220) in place.
    The gradient behind the URL is a placeholder fallback until hero.jpg exists. */
-.welcome-hero { position: relative; height: 40%; min-height: 160px; flex-shrink: 0; background: url("/brand/hero.jpg") center / cover no-repeat, linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #3b82f6 100%); border-bottom: 1px solid var(--color-border); }
+.welcome-hero { position: relative; height: 40%; min-height: 160px; flex-shrink: 0; background: url("/brand/hero.jpg") center / 150% auto no-repeat, linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #3b82f6 100%); border-bottom: 1px solid var(--color-border); }
 /* Logo slot: replace public/brand/logo.svg (64×64) in place. */
 .welcome-logo { position: absolute; left: 16px; bottom: 14px; width: 64px; height: 64px; object-fit: contain; }
 .welcome-version { position: absolute; top: 12px; right: 12px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #fff; background: rgba(0, 0, 0, 0.45); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
@@ -530,7 +530,7 @@ body { font-family: var(--font); font-size: 14px; color: var(--color-text); back
 
 /* About dialog (opened from the app logo menu) */
 .about { width: 440px; max-width: 92vw; max-height: 84vh; background: var(--color-surface-solid); border-radius: var(--radius-lg); box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35); display: flex; flex-direction: column; overflow: hidden; }
-.about-hero { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 24px 16px 18px; background: url("/brand/hero.jpg") center / cover no-repeat, linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #3b82f6 100%); color: #fff; }
+.about-hero { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 24px 16px 18px; background: url("/brand/hero.jpg") center / 150% auto no-repeat, linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #3b82f6 100%); color: #fff; }
 .about-logo { width: 64px; height: 64px; object-fit: contain; }
 .about-hero h2 { font-size: 20px; font-weight: 700; margin: 0; }
 .about-version { font-size: 13px; opacity: 0.85; }
