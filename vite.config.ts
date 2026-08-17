@@ -5,8 +5,9 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 // Entropia Riko — Vite config.
-// root is the project dir; the app entry is /entropia_riko/ui/main.tsx (index.html).
-// Python sources under entropia_riko/core, entropia_riko/runtime, etc. are ignored by Vite.
+// The UI is decoupled: the app entry is /frontend/main.tsx, which mounts the
+// `entropia-template-ui` npm package (GitHub: SakuraEntropia/Entropia-Template-UI).
+// Python sources under entropia_riko/ are ignored by Vite.
 
 // App version comes from git so it stays in sync with the repo tags:
 // `git describe --tags` → "v0.1.0" (on a tag) or "v0.1.0-3-g<sha>" (ahead).

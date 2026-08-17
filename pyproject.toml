@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "entropia-riko"
-version = "0.1.2"
+version = "0.1.3"
 description = "Professional node-graph deep-learning editor — ComfyUI-style visual workflows for PyTorch, with code export, training curves, plugins, and subgraphs."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -61,7 +61,6 @@ select = ["E", "F", "W", "I", "UP", "B"]
 ignore = ["E501", "UP006", "UP035", "UP045"]
 
 [tool.ruff.lint.per-file-ignores]
-"entropia_riko/ui/**" = ["F401", "F821"]  # TypeScript tree, not linted by ruff
 "tests/**" = ["B011"]  # tests intentionally assert against values
 
 [tool.pytest.ini_options]

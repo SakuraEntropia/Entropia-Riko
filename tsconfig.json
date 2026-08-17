@@ -15,6 +15,6 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false
   },
-  "include": ["entropia_riko/ui"],
+  "include": ["frontend"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -8,7 +8,7 @@ code in one pass.
 ## High-level data flow
 
 ```text
-React UI (entropia_riko/ui)          ← node graph, inspector, panels, zustand store
+React UI (entropia-template-ui)      ← node graph, inspector, panels, zustand store (npm package)
         │  HTTP (JSON)
         ▼
 FastAPI server (entropia_riko/server)
@@ -46,8 +46,8 @@ entropia-riko/
 │   ├── backend/              # torch↔IR conversion, device resolve, TF conversion
 │   ├── plugins/              # user-plugin loader (plugins/*/plugin.json)
 │   ├── server/               # FastAPI app (thin HTTP layer over the runtime)
-│   ├── utils/                # config + logging helpers
-│   └── ui/                   # React + Vite + TypeScript frontend
+│   └── utils/                # config + logging helpers
+├── frontend/                 # thin React entry: mounts the entropia-template-ui npm package
 ├── tests/                    # Python unittest suite (runs against entropia_riko)
 ├── examples/                 # .riko example graphs (train/infer pairs)
 ├── templates/project/        # preset tree for "New Project"
@@ -58,9 +58,10 @@ entropia-riko/
 └── docs/                     # user + developer documentation
 ```
 
-The `ui/` directory lives inside the Python package so the monorepo stays a
-single checkout, but it is **excluded from the PyPI wheel** (`pyproject.toml` →
-`tool.setuptools.packages.find.exclude`).
+The React UI is **fully decoupled**: it ships as the `entropia-template-ui`
+npm package (GitHub: `SakuraEntropia/Entropia-Template-UI`). This repo keeps
+only `frontend/main.tsx`, a thin entry that mounts that editor against this
+repo's `/api`. The Python package has no React dependency.
 
 ## The runtime engine (`entropia_riko/runtime`)
 
@@ -115,7 +116,8 @@ runtime → backend → core
 ```
 
 `server` may import `runtime` and `nodes`, but `runtime`/`nodes` never import
-`server`. The `ui/` tree is independent and talks to `server` over HTTP only.
+`server`. The frontend (`frontend/` + the `entropia-template-ui` package) is
+independent and talks to `server` over HTTP only.
 
 ## Adding a node
 
@@ -140,5 +142,5 @@ runtime → backend → core
 | change code export | `runtime/codegen.py` |
 | change training | `runtime/trainer.py` |
 | change the API | `server/routers/` + `server/app.py` |
-| change the UI | `ui/` (React + zustand) |
+| change the UI | `frontend/` (thin entry) + `Entropia-Template-UI` repo (React + zustand) |
 | change the file format | `core/document.py` + `core/tensor.py` |
