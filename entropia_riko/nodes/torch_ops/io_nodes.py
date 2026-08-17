@@ -26,6 +26,20 @@ def _scan_dataset(folder: Path, split: str) -> Dict[str, Any]:
     }
 
 
+def _resolve_project_path(raw: str, context: Dict[str, Any]) -> Path:
+    """Resolve a path; relative paths anchor to the working/project root.
+
+    Prefer project-relative paths (``datasets/raw``) over absolute ones so a
+    project stays portable across machines.
+    """
+    p = Path(raw).expanduser()
+    if not p.is_absolute():
+        base = context.get("working_root") or context.get("project_root")
+        if base:
+            p = Path(base) / p
+    return p.resolve()
+
+
 @register("file_input")
 class FileInputNode(BaseNode):
     """Load an external file or folder and expose it as a typed FILE / FOLDER /
@@ -48,7 +62,7 @@ class FileInputNode(BaseNode):
         params: Dict[str, Any],
         context: Dict[str, Any],
     ) -> Dict[str, Any]:
-        p = Path(params["path"]).expanduser().resolve()
+        p = _resolve_project_path(params["path"], context)
         if not p.exists():
             raise ValueError(
                 f"what: 路径不存在: {p}\n"
@@ -95,7 +109,7 @@ class DatasetNode(BaseNode):
                 "where: nodes.torch_ops.io_nodes.DatasetNode.execute\n"
                 "how_to_fix: 连接 folder 输入，或填写 path 参数。"
             )
-        folder = Path(path).expanduser().resolve()
+        folder = _resolve_project_path(path, context)
         if not folder.is_dir():
             raise ValueError(f"what: 不是目录: {folder}")
         meta = _scan_dataset(folder, str(params.get("split", "all")))
@@ -122,7 +136,8 @@ class CheckpointSaveNode(BaseNode):
         params: Dict[str, Any],
         context: Dict[str, Any],
     ) -> Dict[str, Any]:
-        path = _save_model(inputs["model"], params["path"], params["format"])
+        p = _resolve_project_path(params["path"], context)
+        path = _save_model(inputs["model"], str(p), params["format"])
         return {"checkpoint": TensorValue.from_value(path, kind="checkpoint")}
 
 
@@ -147,7 +162,8 @@ class CheckpointLoadNode(BaseNode):
         params: Dict[str, Any],
         context: Dict[str, Any],
     ) -> Dict[str, Any]:
-        model = _load_model(params["path"], params["device"])
+        p = _resolve_project_path(params["path"], context)
+        model = _load_model(str(p), params["device"])
         template = inputs.get("template")
         module = params.get("module")
         if isinstance(model, dict):

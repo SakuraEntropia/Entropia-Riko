@@ -1,0 +1,60 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "dataset",
+    "workflow": {
+      "name": "dataset",
+      "category": "data",
+      "version": "1",
+      "dependencies": [],
+      "input_types": [
+        "folder"
+      ],
+      "output_types": [
+        "dataset"
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "fin",
+      "type_name": "file_input",
+      "label": "Image Folder",
+      "category": "IO",
+      "position": [
+        40,
+        150
+      ],
+      "parameters": {
+        "path": "datasets/raw"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "ds",
+      "type_name": "dataset",
+      "label": "Dataset",
+      "category": "Data",
+      "position": [
+        260,
+        150
+      ],
+      "parameters": {
+        "split": "train"
+      },
+      "inputs": [],
+      "outputs": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source_node": "fin",
+      "source_port": "folder",
+      "target_node": "ds",
+      "target_port": "folder"
+    }
+  ],
+  "settings": {}
+}

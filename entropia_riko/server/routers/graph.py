@@ -14,6 +14,7 @@ from ...runtime.codegen import export_python, export_python_project
 from ...runtime.codegen_tf import export_keras
 from ...runtime.executor import RuntimeExecutionError, execute
 from ...runtime.registry import default_registry
+from ..state import get_working_root
 
 router = APIRouter()
 
@@ -76,7 +77,7 @@ def execute_graph(body: Dict[str, Any]) -> Dict[str, Any]:
     """Execute a graph document (JSON) and return serialized outputs."""
     try:
         doc = GraphDocument.from_dict(body)
-        outputs = execute(doc)
+        outputs = execute(doc, context={"working_root": str(get_working_root())})
         result: Dict[str, Dict[str, Any]] = {}
         for nid, ports in outputs.items():
             result[nid] = {}

@@ -1,0 +1,108 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "name": "inference",
+    "workflow": {
+      "name": "inference",
+      "category": "inference",
+      "version": "1",
+      "dependencies": [
+        "train"
+      ],
+      "input_types": [
+        "image"
+      ],
+      "output_types": [
+        "class_logits"
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "gin",
+      "type_name": "graph_input",
+      "label": "Digit Image",
+      "category": "Subgraph",
+      "position": [
+        50,
+        150
+      ],
+      "parameters": {
+        "name": "image"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "load",
+      "type_name": "checkpoint_load",
+      "label": "Load Checkpoint",
+      "category": "Model",
+      "position": [
+        260,
+        150
+      ],
+      "parameters": {
+        "path": "checkpoints/mnist.safetensors",
+        "module": "mnist",
+        "device": "cpu"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "inf",
+      "type_name": "inference",
+      "label": "Inference",
+      "category": "Model",
+      "position": [
+        470,
+        150
+      ],
+      "parameters": {
+        "device": "cpu"
+      },
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "id": "gout",
+      "type_name": "graph_output",
+      "label": "Class Logits",
+      "category": "Subgraph",
+      "position": [
+        680,
+        150
+      ],
+      "parameters": {
+        "name": "class"
+      },
+      "inputs": [],
+      "outputs": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "source_node": "gin",
+      "source_port": "value",
+      "target_node": "inf",
+      "target_port": "x"
+    },
+    {
+      "id": "e1",
+      "source_node": "load",
+      "source_port": "model",
+      "target_node": "inf",
+      "target_port": "model"
+    },
+    {
+      "id": "e2",
+      "source_node": "inf",
+      "source_port": "output",
+      "target_node": "gout",
+      "target_port": "value"
+    }
+  ],
+  "settings": {}
+}
